@@ -1,0 +1,258 @@
+claimheart/
+├── .github/
+│   └── workflows/
+│       ├── ci.yml                 # Automation executing test suites, linters, and backend code formatting
+│       └── deploy.yml             # Pipeline building deployment artifacts and Docker registries delivery
+├── docker/
+│   ├── pg-init-scripts/
+│   │   └── init.sql               # PostgreSQL bootstrapping creating extensions and operational schemas
+│   ├── redis/
+│   │   └── redis.conf             # Tunes caching persistence and message broker latency configurations
+│   ├── prometheus/
+│   │   └── prometheus.yml         # Defines application targets actively scraping runtime observability
+│   └── grafana/
+│       └── provisioning/
+│           ├── dashboards.yml     # Auto-loads prebuilt dashboard templates tracking platform performance
+│           └── datasources.yml    # Injects the Prometheus backend as the primary visualization source
+├── docs/
+│   ├── architecture.md            # Topology diagrams charting data movement across micro-services
+│   ├── api-reference.md           # External catalog listing robust REST endpoint interaction payloads
+│   ├── agent-design.md            # LLM prompts, fallback methods, and multi-agent interaction scopes
+│   ├── data-flow.md               # Visual mapping of document state from PDF ingress to mailing finality
+│   ├── hipaa-compliance.md        # Technical protocols securing PHI masking alongside storage encryption
+│   └── local-setup.md             # Developer environment configuration spanning compose startup logic
+├── backend/
+│   ├── app/
+│   │   ├── __init__.py            # Explicit Python declaration bundling the inner fastAPI logic space
+│   │   ├── main.py                # Bootstraps core APIs, registers middle ware, and attaches domains
+│   │   ├── agents/
+│   │   │   ├── __init__.py        # Bundles all separated functional AI execution logic into imports
+│   │   │   ├── extractor/
+│   │   │   │   ├── __init__.py    # Packages GPT-4o vision models dealing with raw file extraction
+│   │   │   │   ├── extractor_agent.py # Orchestrates OpenAI calls interpreting images into JSON shapes
+│   │   │   │   ├── pdf_parser.py  # Utility functions manipulating, slicing, and formatting raw PDFs
+│   │   │   │   ├── vision_client.py   # Wrapped network protocols optimizing HTTP API retry resilience
+│   │   │   │   ├── output_schema.py   # Structured constraints matching Patient, CPT, and ICD bounds
+│   │   │   │   └── prompts.py     # Carefully engineered zero-shot logic capturing dense table metrics
+│   │   │   ├── policy/
+│   │   │   │   ├── __init__.py    # Packages LlamaIndex retrieval systems defining coverage bounds
+│   │   │   │   ├── policy_agent.py    # Merges clinical inputs against semantic embeddings determining scope
+│   │   │   │   ├── vector_store.py    # Wraps Pinecone DB interfaces handling nearest neighbor lookup
+│   │   │   │   ├── document_loader.py # Ingests policy PDF libraries routing chunks into vector blocks
+│   │   │   │   ├── output_schema.py   # Strictly enforced JSON formats tracking exact page citations via LLM
+│   │   │   │   └── prompts.py     # System personas forcing explicit proof before validating claims
+│   │   │   ├── investigator/
+│   │   │   │   ├── __init__.py    # Packages statistical arrays comparing historical data outliers
+│   │   │   │   ├── investigator_agent.py # Fuses algorithmic anomaly detection alongside qualitative rules
+│   │   │   │   ├── anomaly_detector.py # Scikit-Learn logic executing Isolation Forest scoring checks
+│   │   │   │   ├── rule_engine.py # Deterministic boundaries identifying extreme CMS billing violations
+│   │   │   │   ├── output_schema.py   # Aggregates mathematical likelihoods into human readable structs
+│   │   │   │   └── prompts.py     # Transforms array indices into articulate rationale paragraphs
+│   │   │   └── mediator/
+│   │   │       ├── __init__.py    # Packages generation systems closing loops with external parties
+│   │   │       ├── mediator_agent.py  # Reviews prior pipeline nodes assembling empathetic explanations
+│   │   │       ├── letter_generator.py # Formats templated variables finalizing draft correspondence 
+│   │   │       ├── output_schema.py   # Maps letter content boundaries alongside required audit tracking
+│   │   │       └── prompts.py     # Curated behavioral guards minimizing patient re-appeal frequency
+│   │   ├── api/
+│   │   │   ├── __init__.py        # Packages internet-facing controllers scaling synchronous traffic
+│   │   │   ├── dependencies.py    # Injects database sessions seamlessly verifying access tokens locally
+│   │   │   └── routes/
+│   │   │       ├── __init__.py    # Packages distinct functional HTTP controllers defining app boundaries
+│   │   │       ├── claims.py      # Registers multi-part form submissions tracking extraction lifecycle
+│   │   │       ├── policies.py    # Handles knowledge-base augmentations updating Pinecone vectors
+│   │   │       ├── fraud.py       # Exposes investigative risk evaluations matching submitted records
+│   │   │       ├── letters.py     # Controls user modifications amending machine written explanations
+│   │   │       ├── users.py       # Exposes administrative identities modifying platform permission chains
+│   │   │       └── health.py      # Confirms robust internal connectivity satisfying load balancers
+│   │   ├── core/
+│   │   │   ├── __init__.py        # Packages global constants preventing cyclic system configurations
+│   │   │   ├── config.py          # Centralizes environment derivations standardizing deployment state
+│   │   │   ├── logging.py         # Configures JSON stream outputs tracking trace IDs natively consistently
+│   │   │   ├── security.py        # Validates hashed passwords exchanging verified credentials robustly
+│   │   │   └── exceptions.py      # Traps global systemic failures returning standardized API faults
+│   │   ├── db/
+│   │   │   ├── __init__.py        # Packages persistent data architectures ensuring valid transactions
+│   │   │   ├── session.py         # Bootstraps SQLAlchemy pooled operations handling async query bursts
+│   │   │   ├── base_class.py      # Abstract object map providing inheritance structures accurately
+│   │   │   ├── models/
+│   │   │   │   ├── __init__.py    # Packages physical representations pushing table schemas automatically
+│   │   │   │   ├── claim.py       # SQL table schema storing serialized metrics tracking process queues
+│   │   │   │   ├── policy.py      # SQL table schema persisting vector links enabling audit histories
+│   │   │   │   ├── fraud_flag.py  # SQL table schema standardizing threshold overrides transparently
+│   │   │   │   ├── letter.py      # SQL table schema holding draft payloads enabling human oversight
+│   │   │   │   └── user.py        # SQL table schema linking platform logins securing backend systems
+│   │   │   ├── repositories/
+│   │   │   │   ├── __init__.py    # Packages reusable generic query bindings decoupling database actions
+│   │   │   │   ├── base.py        # Central CRUD implementation streamlining uniform table executions
+│   │   │   │   ├── claim_repo.py  # Targeted interactions filtering specialized pipeline queues strictly
+│   │   │   │   ├── policy_repo.py # Targeted interactions mapping uploaded knowledge files dependently
+│   │   │   │   ├── fraud_repo.py  # Targeted interactions retrieving risk aggregations quantitatively
+│   │   │   │   ├── letter_repo.py # Targeted interactions modifying human validated text blocks securely
+│   │   │   │   └── user_repo.py   # Targeted interactions finding credential parameters exclusively
+│   │   │   └── migrations/
+│   │   │       ├── env.py         # Loads database metadata contexts resolving dynamic string migrations
+│   │   │       ├── script.py.mako # Alembic template scaffolding declarative change files natively
+│   │   │       └── versions/
+│   │   │           └── __init__.py # Packages historic database transitions upgrading targets safely
+│   │   ├── schemas/
+│   │   │   ├── __init__.py        # Packages strictly typed HTTP serialization objects maintaining shape
+│   │   │   ├── claim.py           # Validates request data verifying accurate demographic structures
+│   │   │   ├── policy.py          # Validates response formatting rendering knowledge structures broadly
+│   │   │   ├── fraud.py           # Validates nested model logic ensuring threshold floats safely
+│   │   │   ├── letter.py          # Validates text content structures keeping formatting intact fully
+│   │   │   ├── user.py            # Validates identity creation ensuring rigid constraint validations
+│   │   │   └── token.py           # Validates encoded claims protecting temporary access signatures
+│   │   ├── services/
+│   │   │   ├── __init__.py        # Packages abstracted orchestration flows connecting distinct endpoints
+│   │   │   ├── claim_service.py   # Integrates database transitions firing async model extractors precisely
+│   │   │   ├── policy_service.py  # Integrates file reading routing vector updates seamlessly continually
+│   │   │   ├── fraud_service.py   # Integrates mathematical inferences translating rules efficiently 
+│   │   │   └── letter_service.py  # Integrates final generation binding outputs communicating plainly
+│   │   ├── tasks/
+│   │   │   ├── __init__.py        # Packages celery execution units scaling horizontally asynchronously
+│   │   │   ├── worker.py          # Initializes Redis backend resolving distant messaging payloads 
+│   │   │   ├── extraction.py      # Distinct worker functions resolving vision generation latencies
+│   │   │   ├── analysis.py        # Distinct worker functions processing RAG comparisons distantly
+│   │   │   └── communication.py   # Distinct worker functions firing off completed communications
+│   │   ├── utils/
+│   │   │   ├── __init__.py        # Packages generic toolsets resolving repetitive platform functions
+│   │   │   ├── redaction.py       # Instantiates Presidio rules stripping personal identifiers automatically
+│   │   │   ├── pdf_helpers.py     # Scopes generic layout parsing handling skewed clinical uploads
+│   │   │   ├── cost_baselines.py  # Executes rapid algorithmic lookups checking public dataset fees
+│   │   │   ├── s3_helpers.py      # Streamlines Amazon object protocols uploading binary chunks easily
+│   │   │   ├── textract.py        # Resolves complex document extraction using AWS failsafe mechanisms
+│   │   │   └── cms_baseline.py    # Utilities querying and caching CMS regional Medicare fee schedules
+│   │   ├── pipelines/
+│   │   │   ├── __init__.py        # Packages RAG coordination mapping embedding models dependently
+│   │   │   ├── rag_orchestrator.py # Loads dense LlamaIndex functions defining vector query workflows
+│   │   │   ├── document_chunking.py # Translates raw text layers into semantic contextual fragments
+│   │   │   └── query_engine.py    # Formats index searching optimizing prompt accuracy iteratively
+│   │   ├── ml/
+│   │   │   ├── __init__.py        # Packages scikit-learn logic containing algorithmic intelligence
+│   │   │   ├── isolation_forest.py # Defines unsupervised trees targeting highly irregular patterns
+│   │   │   ├── data_prep.py       # Reengineers specific JSON schemas converting strings numerically
+│   │   │   ├── model_registry.py  # Stores production active weights loading predictive structures
+│   │   │   └── evaluate.py        # Simulates localized historical validation benchmarking precision
+│   │   └── tests/
+│   │       ├── __init__.py        # Packages comprehensive continuous integration tracking coverage
+│   │       ├── conftest.py        # Configures baseline execution environments defining robust fixtures
+│   │       ├── api/
+│   │       │   ├── __init__.py    # Packages HTTP verification simulating active network responses
+│   │       │   ├── test_claims.py # Tests endpoint integrity submitting flawed input aggressively
+│   │       │   ├── test_policies.py # Tests endpoint manipulation uploading invalid metadata strings
+│   │       │   ├── test_fraud.py  # Tests endpoint data fetching verifying numeric bounds correctly
+│   │       │   ├── test_letters.py # Tests endpoint configurations mocking active user edits properly
+│   │       │   └── test_users.py  # Tests endpoint authentication securing access headers strictly
+│   │       ├── agents/
+│   │       │   ├── __init__.py    # Packages distinct model functional mocks avoiding live tokens
+│   │       │   ├── test_extractor.py # Tests JSON validation mapping complex spatial PDF arrangements
+│   │       │   ├── test_policy.py    # Tests RAG indexing matching false positives mathematically
+│   │       │   ├── test_investigator.py # Tests algorithmic checks highlighting mock duplicate entries
+│   │       │   └── test_mediator.py   # Tests language boundaries formatting correct empathetic style
+│   │       └── services/
+│   │           ├── __init__.py    # Packages internal functional combinations ensuring integration
+│   │           └── test_claim_service.py # Tests orchestrator paths linking system variables accurately
+│   ├── pyproject.toml             # Declares python distributions executing linter enforcement actively
+│   ├── requirements.txt           # Locks deterministic functional paths securing external pip branches
+│   ├── requirements-dev.txt       # Locks internal verification dependencies protecting build systems
+│   ├── .env                       # Backend core execution strings (OPENAI_API_KEY=YOUR_KEY_HERE, PINECONE_API_KEY=YOUR_KEY_HERE, PINECONE_ENVIRONMENT=YOUR_KEY_HERE, PINECONE_INDEX_NAME=YOUR_KEY_HERE, POSTGRES_URL=YOUR_KEY_HERE, REDIS_URL=YOUR_KEY_HERE, AWS_S3_BUCKET=YOUR_KEY_HERE, AWS_REGION=YOUR_KEY_HERE, AWS_ACCESS_KEY_ID=YOUR_KEY_HERE, AWS_SECRET_ACCESS_KEY=YOUR_KEY_HERE, JWT_SECRET=YOUR_KEY_HERE, JWT_ALGORITHM=YOUR_KEY_HERE, JWT_EXPIRY=YOUR_KEY_HERE, PRESIDIO_CONFIG=YOUR_KEY_HERE, CMS_FEE_SCHEDULE_API_ENDPOINT=YOUR_KEY_HERE, CELERY_BROKER_URL=YOUR_KEY_HERE, CELERY_RESULT_BACKEND_URL=YOUR_KEY_HERE, APP_ENVIRONMENT=YOUR_KEY_HERE, LOG_LEVEL=YOUR_KEY_HERE, CORS_ALLOWED_ORIGINS=YOUR_KEY_HERE, SENTRY_DSN_BACKEND=YOUR_KEY_HERE)
+│   ├── .env.prod                  # Resolves cloud instance overrides pointing backend paths strictly
+│   ├── Dockerfile                 # Commands generating self-contained lightweight application blocks
+│   ├── celeryconfig.py            # Hardcoded route parameters controlling durable asynchronous loops
+│   ├── alembic.ini                # Hooks execution parameters identifying migration path correctly
+│   ├── prometheus.yml             # Resolves explicit application interfaces emitting scrape metrics
+│   └── .pre-commit-config.yaml    # Configures system checks preventing unformatted git insertions
+├── frontend/
+│   ├── app/
+│   │   ├── layout.tsx             # Main HTML document template applying global React Context roots
+│   │   ├── page.tsx               # Analytics index dashboard visualizing total system operational data
+│   │   ├── claims/
+│   │   │   ├── layout.tsx         # Hierarchical layer setting specific UI contexts spanning specific modules
+│   │   │   ├── page.tsx           # Comprehensive data list iterating parsed claims intuitively clear
+│   │   │   └── [id]/
+│   │   │       ├── page.tsx       # Dynamic identifier component gathering granular multi agent outputs
+│   │   │       └── loading.tsx    # Native visual skeleton smoothing network rendering frame gaps
+│   │   ├── policies/
+│   │   │   └── page.tsx           # Admin list managing vector database knowledge document payloads
+│   │   ├── fraud/
+│   │   │   └── page.tsx           # Operational workspace evaluating aggregated algorithmic flag alerts
+│   │   ├── letters/
+│   │   │   └── page.tsx           # Operational workspace listing pending communication validations
+│   │   ├── login/
+│   │   │   └── page.tsx           # Authentication page verifying operator identity paths cleanly
+│   │   └── api/
+│   │       └── auth/
+│   │           └── [...nextauth]/
+│   │               └── route.ts   # NextAuth server configuration linking session hooks efficiently
+│   ├── components/
+│   │   ├── claims/
+│   │   │   ├── ClaimUploadForm.tsx # File drag system inspecting binary payloads rejecting safely
+│   │   │   ├── ClaimTimeline.tsx  # Interactive sequential graph iterating process progress nodes
+│   │   │   ├── EntityHighlight.tsx # Data formatter masking returned extraction details appropriately
+│   │   │   └── PdfViewer.tsx      # In-browser renderer overlaying active highlights across images
+│   │   ├── fraud/
+│   │   │   ├── FraudScoreGauge.tsx # Circular graphic mapping mathematical likelihood thresholds easily
+│   │   │   ├── RationaleTooltip.tsx # Animated explainer parsing logic statements clearly visually
+│   │   │   └── AnomalyFlagsList.tsx # Styled list projecting static CMS or duplication breaches cleanly
+│   │   ├── letters/
+│   │   │   ├── LetterEditor.tsx   # Complex input masking system editing generated letter bodies deeply
+│   │   │   └── AuditTrailDialog.tsx # Interactive overlay surfacing origin metadata links functionally
+│   │   ├── shared/
+│   │   │   ├── Sidebar.tsx        # Vertical persistent navigation changing core operator functions
+│   │   │   ├── TopNav.tsx         # Horizontal persistent header broadcasting identity state clearly
+│   │   │   └── ui/
+│   │   │       ├── button.tsx     # Reusable shadcn/ui function applying centralized basic actions
+│   │   │       ├── card.tsx       # Reusable shadcn/ui function dividing interface block geometries
+│   │   │       ├── dialog.tsx     # Reusable shadcn/ui function projecting modal actions safely
+│   │   │       ├── input.tsx      # Reusable shadcn/ui function styling keyboard data accurately
+│   │   │       ├── table.tsx      # Reusable shadcn/ui function organizing structured grids natively
+│   │   │       └── tabs.tsx       # Reusable shadcn/ui function switching segmented active scopes
+│   ├── hooks/
+│   │   ├── useClaims.ts           # Interacts React Query configurations returning cached network sets
+│   │   ├── useFraudScore.ts       # Interacts React Query polling async background task likelihoods
+│   │   └── useDebounce.ts         # Generates input delays optimizing fast typing server loads safely
+│   ├── lib/
+│   │   ├── apiClient.ts           # Centralizes external functional requests defining error interceptors
+│   │   ├── utils.ts               # Executes complex generic mapping merging standard Tailwind classes
+│   │   └── constants.ts           # Holds static dictionary blocks preventing inline constant errors
+│   ├── store/
+│   │   ├── userSlice.ts           # Zustand variable maintaining identity profiles consistently
+│   │   └── uiSlice.ts             # Zustand variable mapping navigation layout expansion limits
+│   ├── types/
+│   │   ├── claim.d.ts             # Enforces local TypeScript boundaries mimicking backend shapes fully
+│   │   ├── fraud.d.ts             # Enforces local TypeScript boundaries identifying exact float arrays
+│   │   ├── user.d.ts              # Enforces local TypeScript boundaries matching auth identities native
+│   │   └── letter.d.ts            # Enforces local TypeScript boundaries matching precise text scopes
+│   ├── public/
+│   │   ├── logo.svg               # Static vector graphic projecting ClaimHeart scalable identity
+│   │   ├── favicon.ico            # Static bitmap graphic decorating active browser application tabs
+│   │   └── robots.txt             # Static directives commanding external web scrapers politely away
+│   ├── styles/
+│   │   └── globals.css            # Enforces foundational Tailwind directives resolving theme variables
+│   ├── tests/
+│   │   ├── e2e/
+│   │   │   ├── login.spec.ts      # Simulates browser runtime mapping login interaction functionality
+│   │   │   └── upload-claim.spec.ts # Simulates browser runtime executing full pipeline rendering loops
+│   │   └── unit/
+│   │       ├── components/
+│   │       │   ├── FraudScoreGauge.test.tsx # Tests simulated threshold logic matching visual gauge rules
+│   │       │   └── ClaimTimeline.test.tsx   # Tests simulated stage changes moving graphic loops actively
+│   │       └── utils.test.ts      # Tests simulated transformation values mapping strings mathematically
+│   ├── package.json               # Registers internal Node directives running system scripts reliably
+│   ├── tsconfig.json              # Resolves application type constraints pointing JSX boundaries safely
+│   ├── tailwind.config.ts         # Configures framework boundaries extending modular design systems
+│   ├── next.config.ts             # Configures environment scopes handling core rendering topologies
+│   ├── .env                       # Frontend local execution scopes (NEXT_PUBLIC_API_BASE_URL=YOUR_KEY_HERE, SENTRY_DSN_FRONTEND=YOUR_KEY_HERE, APP_ENVIRONMENT=YOUR_KEY_HERE, LOG_LEVEL=YOUR_KEY_HERE)
+│   ├── .env.prod                  # Frontend production execution mapping active server dependencies
+│   ├── Dockerfile                 # Commands packaging optimized Next scripts launching micro layers
+│   ├── jest.config.ts             # Identifies target execution systems processing component testing
+│   ├── playwright.config.ts       # Identifies end-to-end framework scopes controlling browser threads
+│   ├── .eslintrc.json             # Prevents poor programmatic syntax writing clean Next.js formats
+│   └── .prettierrc                # Applies consistent developer whitespace keeping commits minimal
+├── .gitignore                     # Hides operational environments blocking local passwords strictly
+├── .env                           # MAIN ENV: OPENAI_API_KEY=YOUR_KEY_HERE, PINECONE_API_KEY=YOUR_KEY_HERE, PINECONE_ENVIRONMENT=YOUR_KEY_HERE, PINECONE_INDEX_NAME=YOUR_KEY_HERE, POSTGRES_URL=YOUR_KEY_HERE, REDIS_URL=YOUR_KEY_HERE, AWS_S3_BUCKET=YOUR_KEY_HERE, AWS_REGION=YOUR_KEY_HERE, AWS_ACCESS_KEY_ID=YOUR_KEY_HERE, AWS_SECRET_ACCESS_KEY=YOUR_KEY_HERE, JWT_SECRET=YOUR_KEY_HERE, JWT_ALGORITHM=YOUR_KEY_HERE, JWT_EXPIRY=YOUR_KEY_HERE, PRESIDIO_CONFIG=YOUR_KEY_HERE, CMS_FEE_SCHEDULE_API_ENDPOINT=YOUR_KEY_HERE, CELERY_BROKER_URL=YOUR_KEY_HERE, CELERY_RESULT_BACKEND_URL=YOUR_KEY_HERE, APP_ENVIRONMENT=YOUR_KEY_HERE, LOG_LEVEL=YOUR_KEY_HERE, CORS_ALLOWED_ORIGINS=YOUR_KEY_HERE, NEXT_PUBLIC_API_BASE_URL=YOUR_KEY_HERE, SENTRY_DSN_BACKEND=YOUR_KEY_HERE, SENTRY_DSN_FRONTEND=YOUR_KEY_HERE, GRAFANA_PORT=YOUR_KEY_HERE, PROMETHEUS_PORT=YOUR_KEY_HERE
+├── .env.prod                      # Overrides execution domains passing platform production URLs accurately
+├── docker-compose.yml             # Connects comprehensive local system spinning dependent frameworks safely
+├── Makefile                       # Simplifies developer scripts typing short CLI aliases functionally
+└── README.md                      # Guides platform contributors documenting complex logic easily
