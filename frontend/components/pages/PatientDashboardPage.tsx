@@ -89,7 +89,7 @@ export default function PatientDashboardPage() {
     return (
       <div className="space-y-6">
         <div className="space-y-3"><SkeletonBlock className="h-9 w-56" /><SkeletonBlock className="h-5 w-80" /></div>
-        <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
+        <div className="grid gap-6 2xl:grid-cols-[1.15fr_0.85fr]">
           <div className="space-y-6"><SkeletonCard lines={4} /><SkeletonCard lines={5} /></div>
           <div className="space-y-6"><SkeletonCard lines={4} /><SkeletonCard lines={4} /></div>
         </div>
@@ -100,7 +100,7 @@ export default function PatientDashboardPage() {
   return (
     <div className="space-y-6 sm:space-y-8">
       <section className="overflow-hidden rounded-[2rem] border border-slate-200 bg-[linear-gradient(135deg,#f8fbff_0%,#e8f1fb_40%,#0d1f34_40%,#112e4d_100%)] shadow-[0_20px_50px_rgba(15,23,42,0.10)]">
-        <div className="grid gap-8 px-6 py-7 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:px-10 lg:py-10">
+        <div className="grid gap-8 px-5 py-6 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:px-10 lg:py-10">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-[var(--ch-blue-border)] bg-white/75 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--ch-blue-dark)]">
               <HeartPulse className="h-3.5 w-3.5" /> Patient Experience Layer
@@ -112,13 +112,13 @@ export default function PatientDashboardPage() {
               Switch between beneficiaries, follow the active claim in real time, and see the formal claim outcome as soon as the insurer finishes review.
             </p>
 
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:flex xl:flex-wrap">
               {DEMO_WORKFLOW_CASES.map((item) => (
                 <button
                   key={item.id}
                   type="button"
                   onClick={() => switchCase(item.id)}
-                  className={`rounded-full border px-4 py-2 text-sm font-semibold transition-all ${item.id === selectedCaseId ? "border-[var(--ch-blue)] bg-[var(--ch-blue)] text-white" : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"}`}
+                  className={`rounded-2xl border px-4 py-3 text-left text-sm font-semibold transition-all xl:rounded-full xl:py-2 ${item.id === selectedCaseId ? "border-[var(--ch-blue)] bg-[var(--ch-blue)] text-white" : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"}`}
                 >
                   {item.shortLabel} · {item.patient.name}
                 </button>
@@ -133,9 +133,9 @@ export default function PatientDashboardPage() {
               { label: "Live Claims", value: patientClaims.length, helper: patientClaims.length ? "Synced from hospital and insurer" : "Waiting for hospital submission" },
               { label: "Latest Status", value: activeClaim ? activeClaim.status.replace("_", " ") : "No claim yet", helper: activeClaim?.decisionNote || selectedCase.expectedOutcome },
             ].map((item) => (
-              <div key={item.label} className="rounded-[1.6rem] border border-white/10 bg-white/8 p-5 text-white backdrop-blur">
+              <div key={item.label} className="rounded-[1.6rem] border border-white/10 bg-white/8 p-4 text-white backdrop-blur sm:p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/60">{item.label}</p>
-                <p className="mt-3 text-xl font-bold tracking-[-0.04em] text-white">{item.value}</p>
+                <p className="mt-3 break-words text-lg font-bold tracking-[-0.04em] text-white sm:text-xl">{item.value}</p>
                 <p className="mt-2 text-sm leading-6 text-white/68">{item.helper}</p>
               </div>
             ))}
@@ -143,15 +143,15 @@ export default function PatientDashboardPage() {
         </div>
       </section>
 
-      <section className="grid gap-6 2xl:grid-cols-[1.15fr_0.85fr]">
-        <div className="space-y-6">
+      <section className="grid gap-6 2xl:grid-cols-[minmax(0,1.15fr)_minmax(20rem,0.85fr)]">
+        <div className="min-w-0 space-y-6">
           <MotionCard className="rounded-[1.8rem] border border-slate-200 bg-white p-5 shadow-[0_10px_28px_rgba(15,23,42,0.05)] sm:p-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div>
                 <h2 className="text-xl font-bold text-slate-900 md:text-[1.45rem]">Active Claim Story</h2>
                 <p className="mt-1 text-sm text-[var(--ch-muted)]">The latest claim for this patient is reflected here with the same state the hospital and insurer can see.</p>
               </div>
-              {activeClaim ? <StatusBadge status={activeClaim.status} /> : <span className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-600">Waiting for claim</span>}
+              {activeClaim ? <StatusBadge status={activeClaim.status} /> : <span className="inline-flex w-full items-center justify-center rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-600 sm:w-auto">Waiting for claim</span>}
             </div>
 
             {!activeClaim ? (
@@ -160,7 +160,7 @@ export default function PatientDashboardPage() {
               </div>
             ) : (
               <>
-                <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                <div className="mt-6 grid gap-4 sm:grid-cols-2 2xl:grid-cols-4">
                   {[
                     { label: "Claim ID", value: activeClaim.id },
                     { label: "Hospital", value: activeClaim.hospital },
@@ -174,15 +174,15 @@ export default function PatientDashboardPage() {
                   ))}
                 </div>
 
-                <div className="mt-6 grid gap-6 2xl:grid-cols-[1.12fr_0.88fr]">
-                  <div>
+                <div className="mt-6 grid gap-6 xl:grid-cols-[minmax(0,1.08fr)_minmax(18rem,0.92fr)]">
+                  <div className="min-w-0">
                     <p className="text-sm font-semibold uppercase tracking-[0.12em] text-[var(--ch-subtle)]">Timeline</p>
                     <div className="mt-4 rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
                       <TimelineView timeline={activeClaim.timeline} />
                     </div>
                   </div>
 
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-sm font-semibold uppercase tracking-[0.12em] text-[var(--ch-subtle)]">Agent Summary</p>
                     <div className="mt-4 grid gap-4">
                       <AgentResultCard agentName="Policy Agent" status={activeClaim.aiResults.policy.status} reason={activeClaim.aiResults.policy.reason} confidence={activeClaim.aiResults.policy.confidence} highlights={activeClaim.aiResults.policy.highlights} compact />
@@ -201,7 +201,7 @@ export default function PatientDashboardPage() {
                 <h2 className="text-xl font-bold text-slate-900 md:text-[1.45rem]">Share Supporting Documents</h2>
                 <p className="mt-1 text-sm text-[var(--ch-muted)]">Useful for appeals or manual review. These appear instantly on the insurer side.</p>
               </div>
-              <button type="button" onClick={saveDocuments} className="inline-flex h-11 items-center justify-center rounded-2xl bg-[var(--ch-blue)] px-5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(74,142,219,0.18)] transition-all hover:opacity-95">
+              <button type="button" onClick={saveDocuments} className="inline-flex h-11 w-full items-center justify-center rounded-2xl bg-[var(--ch-blue)] px-5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(74,142,219,0.18)] transition-all hover:opacity-95 sm:w-auto">
                 Upload To Claim
               </button>
             </div>
@@ -211,13 +211,13 @@ export default function PatientDashboardPage() {
           </MotionCard>
         </div>
 
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           <MotionCard className="rounded-[1.8rem] border border-slate-200 bg-white p-5 shadow-[0_10px_28px_rgba(15,23,42,0.05)] sm:p-6">
-            <div className="flex items-center gap-3">
+            <div className="flex items-start gap-3">
               <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--ch-blue-light)] text-[var(--ch-blue)]">
                 <ShieldCheck className="h-5 w-5" />
               </div>
-              <div>
+              <div className="min-w-0">
                 <h2 className="text-xl font-bold text-slate-900 md:text-[1.45rem]">Coverage Snapshot</h2>
                 <p className="mt-1 text-sm text-[var(--ch-muted)]">The patient-facing explanation is grounded in the same policy pack used by the insurer.</p>
               </div>
@@ -236,23 +236,23 @@ export default function PatientDashboardPage() {
 
             <div className="mt-5 rounded-[1.5rem] border border-slate-200 bg-white p-4">
               <p className="text-sm font-semibold uppercase tracking-[0.12em] text-[var(--ch-subtle)]">Policy excerpt</p>
-              <pre className="mt-4 max-h-[18rem] overflow-auto whitespace-pre-wrap rounded-[1.2rem] border border-slate-200 bg-slate-50 p-4 text-[12px] leading-6 text-slate-700 sm:text-[13px]">{policyText.slice(0, 1800)}{policyText.length > 1800 ? "\n\n..." : ""}</pre>
+              <pre className="mt-4 max-h-[18rem] overflow-auto whitespace-pre-wrap break-words rounded-[1.2rem] border border-slate-200 bg-slate-50 p-4 text-[12px] leading-6 text-slate-700 sm:text-[13px]">{policyText.slice(0, 1800)}{policyText.length > 1800 ? "\n\n..." : ""}</pre>
             </div>
           </MotionCard>
 
           <MotionCard className="rounded-[1.8rem] border border-slate-200 bg-white p-5 shadow-[0_10px_28px_rgba(15,23,42,0.05)] sm:p-6">
-            <div className="flex items-center gap-3">
+            <div className="flex items-start gap-3">
               <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--ch-blue-light)] text-[var(--ch-blue)]">
                 <FileText className="h-5 w-5" />
               </div>
-              <div>
+              <div className="min-w-0">
                 <h2 className="text-xl font-bold text-slate-900 md:text-[1.45rem]">Decision Letter</h2>
                 <p className="mt-1 text-sm text-[var(--ch-muted)]">It appears automatically once the insurer review finishes.</p>
               </div>
             </div>
 
             {activeClaim?.decisionLetter ? (
-              <pre className="mt-5 max-h-[24rem] overflow-auto whitespace-pre-wrap rounded-[1.4rem] border border-slate-200 bg-slate-50 p-4 text-sm leading-7 text-slate-700">{activeClaim.decisionLetter}</pre>
+              <pre className="mt-5 max-h-[24rem] overflow-auto whitespace-pre-wrap break-words rounded-[1.4rem] border border-slate-200 bg-slate-50 p-4 text-sm leading-7 text-slate-700">{activeClaim.decisionLetter}</pre>
             ) : (
               <div className="mt-5 rounded-[1.4rem] border border-dashed border-slate-200 bg-slate-50 p-6 text-sm leading-7 text-[var(--ch-muted)]">
                 The claim is still moving through adjudication. Once the insurer finalises the outcome, the full patient-friendly explanation will appear here.
