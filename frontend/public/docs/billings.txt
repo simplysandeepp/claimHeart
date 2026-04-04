@@ -1,0 +1,31 @@
+CITY CARE HOSPITAL
+TAX INVOICE
+Invoice No.: CCH-INV-2026-003847
+Date: 06 April 2026
+
+Patient Name: Arjun Mehta
+IP No.: CCH-IP-2026-00892
+Policy No.: HDFC-ERGO-2025-991203
+Admission: 05 April 2026 | Discharge: 06 April 2026
+
+--- ITEMISED BILLING ---
+Room Charges (General Ward, 1 night): INR 2,500
+Doctor Consultation (2 visits): INR 1,400
+Nursing Charges: INR 800
+IV Fluids (NS 500ml x 3): INR 900
+Tab Paracetamol 650mg x 15: INR 225
+Tab Pantoprazole 40mg x 2: INR 80
+Syp Electral 200ml x 2: INR 140
+
+Inj. PlateMax IV — Administration 1 (05 Apr, 08:00 AM): INR 4,200
+Inj. PlateMax IV — Administration 2 (05 Apr, 02:00 PM): INR 4,200
+Inj. PlateMax IV — Administration 3 (05 Apr, 09:00 PM): INR 4,200
+
+Diagnostic Tests (outsourced to Metro Diagnostics): INR 1,800
+Consumables & Disposables: INR 650
+
+--- TOTAL BILLED: INR 21,095 ---
+GST (5%): INR 1,055
+GRAND TOTAL: INR 22,150
+
+Cashless Claim Amount Requested: INR 22,150

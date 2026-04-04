@@ -1,10 +1,10 @@
-import AppShell from "@/components/layout/AppShell";
-import DashboardPage from "@/components/pages/DashboardPage";
+﻿import AppShell from "@/components/layout/AppShell";
+import DashboardRedirectPage from "@/components/pages/DashboardRedirectPage";
 
 export default function DashboardRoute() {
   return (
     <AppShell>
-      <DashboardPage />
+      <DashboardRedirectPage />
     </AppShell>
   );
 }

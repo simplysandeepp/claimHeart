@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # AI & LLM
 google-genai
 python-dotenv
@@ -12,3 +13,51 @@ pydantic
 # Utilities
 numpy
 requests
+=======
+fastapi
+uvicorn[standard]
+python-multipart
+
+
+# DATABASE
+sqlalchemy
+psycopg2-binary
+alembic
+
+# AUTH & SECURITY
+python-jose[cryptography]
+passlib[bcrypt]
+
+
+# ENVIRONMENT
+
+python-dotenv
+
+
+# OCR & IMAGE PROCESSING
+pytesseract
+easyocr
+opencv-python
+pillow
+numpy
+
+# PDF PROCESSING (VERY IMPORTANT)
+pdf2image
+PyMuPDF
+
+
+# NLP / LLM (Gemini) // geranl rakha h sandy add kar diyo baki 
+google-generativeai
+
+# TASK QUEUE 
+celery
+redis
+
+# UTILITIES
+requests
+tqdm
+
+#url image :
+httpx==0.26.0
+
+>>>>>>> 4da34a8910ab9fabc30671f032a8877e5260e57b

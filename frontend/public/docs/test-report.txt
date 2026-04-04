@@ -1,0 +1,24 @@
+METRO DIAGNOSTICS LAB
+NAABL Accredited | Lab Reg: MH-LAB-2018-00234
+Date: 05 April 2026 | Report Time: 11:30 AM
+
+Patient Name: Arjun Mehta
+Age/Sex: 32Y / Male
+Ref. Doctor: Dr. Rakesh Iyer
+Sample Type: Venous Blood
+
+--- COMPLETE BLOOD COUNT ---
+Haemoglobin: 13.2 g/dL        (Normal: 13-17)
+Total WBC: 3,200 cells/mcL     (LOW — Normal: 4,000-11,000)
+Platelet Count: 68,000/mcL     (CRITICALLY LOW — Normal: 1,50,000-4,00,000)
+Haematocrit: 41%               (Normal: 40-50%)
+
+--- DENGUE SEROLOGY ---
+NS1 Antigen: POSITIVE
+IgM Anti-Dengue: POSITIVE
+IgG Anti-Dengue: NEGATIVE
+
+Remarks: Platelet count critically low. Immediate medical supervision
+recommended. Results consistent with early acute dengue infection.
+
+Authorised by: Dr. Sunita Rao, MD Pathology

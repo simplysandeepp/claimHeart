@@ -1,698 +1,497 @@
-"use client";
+﻿"use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import {
   Activity,
-  AlertTriangle,
   ArrowRight,
-  Award,
-  BarChart2,
-  Building2,
-  CheckCircle2,
-  ChevronRight,
-  Clock3,
-  Eye,
-  FileText,
   Github,
   Globe,
   Heart,
   Linkedin,
-  Lock,
   Mail,
   MapPin,
-  MessageSquare,
   PhoneCall,
   Play,
-  Search,
-  Shield,
   Star,
-  TrendingUp,
   Twitter,
-  Users,
-  Workflow,
 } from "lucide-react";
+import { motion, type Variants } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
+import { agents, differentiators, faqs, footerLinks, impacts, problems, stats, steps, testimonials, trustedBy } from "@/components/pages/landingContent";
 
-/* ─── DATA ────────────────────────────────────────────────────────────────── */
+const testimonialLoop = [...testimonials, ...testimonials, ...testimonials];
+const trustedLoop = [...trustedBy, ...trustedBy, ...trustedBy];
 
-const stats = [
-  { value: "18s",    label: "Avg. Processing Time", sub: "vs 60-90 days manual",    tone: "text-[var(--ch-blue)]" },
-  { value: "90%",    label: "Fraud Detection Rate",  sub: "Isolation Forest + LLM", tone: "text-[var(--ch-green)]" },
-  { value: "10x",    label: "Faster Than Manual",    sub: "End-to-end automation",  tone: "text-[var(--ch-amber)]" },
-  { value: "Rs48Cr", label: "Fraud Prevented",       sub: "This financial year",    tone: "text-[var(--ch-red)]" },
+const consoleLines = [
+  "> Intake session initialised for pre-auth package",
+  "> OCR scan complete - 5 documents normalised",
+  "> RAG retrieval matched policy clauses 3.2, 5.2, and 6.4",
+  "> Policy agent finished coverage validation",
+  "> Medical agent finished clinical consistency review",
+  "> Cross-validation agent reconciled invoice, labs, and prescription",
+  "> Decision letter generated and queued for registered patient email",
 ];
 
-const problems = [
-  {
-    icon: FileText,
-    stat: "1 in 5",
-    label: "Claims Denied",
-    desc: "Every year, millions of legitimate claims are rejected due to coding errors and documentation gaps.",
-    tone: "text-[var(--ch-red)]",
-    bg: "bg-[color:rgba(239,68,68,0.08)]",
+const heroContainer: Variants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.05,
+    },
   },
-  {
-    icon: BarChart2,
-    stat: "80%",
-    label: "Data Unstructured",
-    desc: "Insurance data lives in scanned PDFs, handwritten forms, and siloed systems that are difficult to process efficiently.",
-    tone: "text-[var(--ch-amber)]",
-    bg: "bg-[color:rgba(245,158,11,0.08)]",
-  },
-  {
-    icon: AlertTriangle,
-    stat: "$68B",
-    label: "Annual Fraud Loss",
-    desc: "Ghost billing, upcoding, and phantom services drain billions from the healthcare system annually.",
-    tone: "text-[var(--ch-red)]",
-    bg: "bg-[color:rgba(239,68,68,0.08)]",
-  },
-  {
-    icon: MessageSquare,
-    stat: "0%",
-    label: "Patient Transparency",
-    desc: "Patients receive denial letters with no explanation, no recourse, and no clarity on what went wrong.",
-    tone: "text-[var(--ch-subtle)]",
-    bg: "bg-slate-50",
-  },
-];
-
-const agents = [
-  {
-    icon: FileText,
-    name: "Extractor Agent",
-    tag: "GPT-4o Vision",
-    desc: "Converts scanned and handwritten medical PDFs into structured JSON in under 2 seconds with minimal manual touchpoints.",
-    card: "bg-[var(--ch-blue-light)] border-[var(--ch-blue-border)]",
-    iconWrap: "bg-[color:rgba(74,142,219,0.14)]",
-    tone: "text-[var(--ch-blue)]",
-  },
-  {
-    icon: Search,
-    name: "Policy RAG Agent",
-    tag: "LlamaIndex + Pinecone",
-    desc: "Matches every claim line item against policy clauses with exact citations, page references, and explainable retrieval context.",
-    card: "bg-green-50 border-green-200",
-    iconWrap: "bg-green-100/80",
-    tone: "text-green-600",
-  },
-  {
-    icon: AlertTriangle,
-    name: "Fraud Investigator",
-    tag: "Isolation Forest + LLM",
-    desc: "Combines anomaly scoring, duplicate detection, and semantic reasoning to catch suspicious patterns earlier.",
-    card: "bg-red-50 border-red-200",
-    iconWrap: "bg-red-100/80",
-    tone: "text-red-500",
-  },
-  {
-    icon: MessageSquare,
-    name: "Mediator Agent",
-    tag: "Claude Sonnet",
-    desc: "Turns model outputs into patient-safe explanations and hospital-ready communications with a full audit trail.",
-    card: "bg-amber-50 border-amber-200",
-    iconWrap: "bg-amber-100/80",
-    tone: "text-amber-500",
-  },
-];
-
-const steps = [
-  { step: "01", title: "Upload",          desc: "Hospital submits pre-auth form or medical PDF via secure portal",        icon: FileText },
-  { step: "02", title: "AI Processing",   desc: "Extractor Agent converts PDF to structured JSON in under 2 seconds",     icon: Workflow },
-  { step: "03", title: "Policy Check",    desc: "RAG Agent matches claim against policy clauses with citations",          icon: Search },
-  { step: "04", title: "Fraud Detection", desc: "Fraud Agent runs statistical and semantic anomaly detection",            icon: Shield },
-  { step: "05", title: "Decision",        desc: "Mediator combines all signals into a clear recommendation",              icon: CheckCircle2 },
-];
-
-const differentiators = [
-  { icon: Eye,          title: "Glass-box AI",     desc: "Every decision is explainable. Full audit trail. No black boxes." },
-  { icon: AlertTriangle,title: "Real-time Fraud",  desc: "Sub-second fraud scoring on every claim instead of delayed batch checks." },
-  { icon: FileText,     title: "Policy Citations", desc: "Exact page and clause references for every coverage recommendation." },
-  { icon: CheckCircle2, title: "Human-in-loop",    desc: "AI recommends, humans decide. Escalation workflows are built in." },
-];
-
-const impacts = [
-  {
-    icon: Clock3,
-    value: "18 sec",
-    label: "Average Processing Time",
-    sub: "Down from 60-90 days of manual review",
-    card: "bg-[var(--ch-blue-light)] border-[var(--ch-blue-border)]",
-    tone: "text-[var(--ch-blue)]",
-  },
-  {
-    icon: Shield,
-    value: "90%",
-    label: "Fraud Detection Accuracy",
-    sub: "Combining ML anomaly detection and LLM reasoning",
-    card: "bg-green-50 border-green-200",
-    tone: "text-green-600",
-  },
-  {
-    icon: TrendingUp,
-    value: "10x",
-    label: "Faster Than Manual",
-    sub: "End-to-end automation across all claim types",
-    card: "bg-amber-50 border-amber-200",
-    tone: "text-amber-500",
-  },
-];
-
-const mockPipeline = ["Extractor", "Policy", "Fraud", "Mediator"];
-
-const trustedBy = [
-  "Star Health", "HDFC ERGO", "Bajaj Allianz", "ICICI Lombard", "Max Bupa", "Niva Bupa",
-];
-
-const testimonials = [
-  {
-    name: "Dr. Anil Mehta",
-    role: "Chief Medical Officer",
-    company: "Star Health Insurance",
-    text: "ClaimHeart reduced our processing time from 45 days to under a minute. The fraud detection alone saved us over ₹12 crore in the first quarter.",
-    avatar: "AM",
-    avatarBg: "bg-[var(--ch-blue)]",
-  },
-  {
-    name: "Preethi Nair",
-    role: "VP Operations",
-    company: "HDFC ERGO",
-    text: "The policy citation feature is a game-changer. Our auditors now have exact clause references for every decision — no more black-box approvals.",
-    avatar: "PN",
-    avatarBg: "bg-green-500",
-  },
-  {
-    name: "Rajiv Sharma",
-    role: "Head of Claims",
-    company: "Bajaj Allianz",
-    text: "We were skeptical about AI in claims. ClaimHeart changed that. The human-in-loop design means our team stays in control while AI handles the heavy lifting.",
-    avatar: "RS",
-    avatarBg: "bg-amber-500",
-  },
-];
-
-const pricingPlans = [
-  {
-    name: "Starter",
-    price: "₹2,999",
-    period: "/month",
-    desc: "Perfect for small TPAs processing up to 500 claims/month.",
-    features: [
-      "Up to 500 claims/month",
-      "Extractor + Policy agents",
-      "Email support",
-      "Basic audit trail",
-      "Standard SLA",
-    ],
-    cta: "Start Free Trial",
-    highlight: false,
-    ctaClass: "bg-slate-800 hover:bg-slate-700 text-white",
-    borderClass: "border-slate-200",
-  },
-  {
-    name: "Professional",
-    price: "₹9,999",
-    period: "/month",
-    desc: "For growing insurers with full fraud detection capabilities.",
-    features: [
-      "Up to 5,000 claims/month",
-      "All 4 AI agents",
-      "Priority support",
-      "Full audit trail + export",
-      "Fraud dashboard",
-      "Custom policy upload",
-    ],
-    cta: "Get Started",
-    highlight: true,
-    ctaClass: "bg-white hover:bg-white/90 text-[var(--ch-blue-dark)]",
-    borderClass: "border-transparent",
-    badge: "Most Popular",
-  },
-  {
-    name: "Enterprise",
-    price: "Custom",
-    period: "",
-    desc: "For large insurers and hospital networks at scale.",
-    features: [
-      "Unlimited claims",
-      "Dedicated AI infrastructure",
-      "24/7 SLA + CSM",
-      "Custom workflow design",
-      "Custom integrations",
-      "Compliance-ready reporting",
-    ],
-    cta: "Contact Sales",
-    highlight: false,
-    ctaClass: "bg-violet-600 hover:bg-violet-700 text-white",
-    borderClass: "border-violet-200",
-  },
-];
-
-const faqs = [
-  {
-    q: "How accurate is the fraud detection?",
-    a: "Our hybrid Isolation Forest + LLM approach achieves 90%+ accuracy, validated across 2.4 lakh claims in the 2025–26 financial year.",
-  },
-  {
-    q: "Is patient data safe with ClaimHeart?",
-    a: "All data is encrypted at rest and in transit, with strict access controls and enterprise-grade auditability across every workflow.",
-  },
-  {
-    q: "How long does integration take?",
-    a: "Most teams go live in under 2 weeks with guided onboarding, policy setup, and reviewer training.",
-  },
-  {
-    q: "Does ClaimHeart replace human adjusters?",
-    a: "No — and by design. ClaimHeart recommends; humans decide. Complex or sensitive claims always escalate to a human reviewer.",
-  },
-  {
-    q: "What document formats are supported?",
-    a: "We support PDF (scanned & native), JPEG, PNG, TIFF, and common DICOM exports. Our GPT-4o Vision pipeline handles handwritten forms and low-resolution scans.",
-  },
-];
-
-const footerLinks = {
-  Product:   ["Features", "How It Works", "Pricing", "Changelog", "Roadmap"],
-  Company:   ["About Us", "Careers", "Press", "Blog", "Partners"],
-  Resources: ["Guides", "Case Studies", "Webinars", "Compliance", "Support Center"],
-  Legal:     ["Privacy Policy", "Terms of Service", "Cookie Policy", "Security"],
 };
 
-/* ─── PAGE ────────────────────────────────────────────────────────────────── */
+const heroItem: Variants = {
+  hidden: { opacity: 0, y: 18 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const previewItem: Variants = {
+  hidden: { opacity: 0, x: 28, scale: 0.98 },
+  show: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.18 },
+  },
+};
+
+function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.45, delay: delay / 1000, ease: "easeOut" }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function CountUp({ value, prefix = "", suffix = "", className = "" }: { value: number; prefix?: string; suffix?: string; className?: string }) {
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useEffect(() => {
+    let frame = 0;
+    const duration = 1200;
+    const start = performance.now();
+
+    const tick = (time: number) => {
+      const progress = Math.min((time - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setDisplayValue(Math.round(value * eased));
+      if (progress < 1) frame = window.requestAnimationFrame(tick);
+    };
+
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [value]);
+
+  return (
+    <span className={className}>
+      {prefix}
+      {displayValue}
+      {suffix}
+    </span>
+  );
+}
 
 export default function LandingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [visibleConsoleCount, setVisibleConsoleCount] = useState(3);
+
+  useEffect(() => {
+    let nextCount = 3;
+    const interval = window.setInterval(() => {
+      nextCount = nextCount >= consoleLines.length ? 3 : nextCount + 1;
+      setVisibleConsoleCount(nextCount);
+    }, 1350);
+
+    return () => window.clearInterval(interval);
+  }, []);
 
   return (
-    <div className="bg-[var(--ch-surface)] text-[var(--ch-text)]">
+    <div className="overflow-x-hidden bg-[var(--ch-surface)] text-[var(--ch-text)]">
       <Navbar />
 
-      {/* ── HERO ──────────────────────────────────────────────────────────── */}
-      <section className="border-b border-[var(--ch-blue-border)] bg-[radial-gradient(circle_at_top_left,rgba(74,142,219,0.12),transparent_42%),linear-gradient(135deg,#eef4fb_0%,#f8fafc_58%,#eef4fb_100%)] px-6 pb-20 pt-28 md:px-12 lg:px-20">
-        <div className="mx-auto flex max-w-7xl flex-col items-center gap-12 lg:flex-row">
+      <section className="relative isolate overflow-hidden border-b border-[var(--ch-blue-border)] px-4 pb-20 pt-28 sm:px-6 md:px-12 lg:px-20 lg:pt-32">
+        <div className="absolute inset-0 -z-10">
+          <Image
+            src="/assets/bg.jpg"
+            alt="ClaimHeart healthcare claims background"
+            fill
+            priority
+            className="object-cover object-[74%_center] lg:object-[82%_center]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#EEF4FB]/82 via-white/64 to-transparent" />
+          <div className="absolute left-[10%] top-16 h-40 w-40 rounded-full bg-[var(--ch-blue)]/8 blur-xl" />
+          <div className="absolute bottom-10 right-[8%] h-52 w-52 rounded-full bg-sky-200/18 blur-xl" />
+        </div>
 
-          {/* Left */}
-          <div className="max-w-2xl flex-1">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--ch-blue-border)] bg-white/70 px-4 py-2 text-[11px] font-semibold text-[var(--ch-blue-dark)] shadow-[0_8px_24px_rgba(74,142,219,0.08)] backdrop-blur">
+        <div className="mx-auto flex max-w-7xl flex-col items-center gap-12 lg:flex-row lg:justify-between">
+          <motion.div
+            className="max-w-2xl flex-1"
+            variants={heroContainer}
+            initial="hidden"
+            animate="show"
+          >
+            <motion.div variants={heroItem} className="inline-flex items-center gap-2 rounded-full border border-[var(--ch-blue-border)] bg-white/80 px-4 py-2 text-[11px] font-semibold text-[var(--ch-blue-dark)] shadow-[0_12px_30px_rgba(74,142,219,0.08)] backdrop-blur">
               <Activity className="h-3.5 w-3.5 text-[var(--ch-blue)]" />
-              AI-Powered Multi-Agent Claims Orchestration
-            </div>
+              Intelligent Operating System For Healthcare Claims
+            </motion.div>
 
-            {/* Heading — 4 lines as specified */}
-            <h1 className="text-[2.1rem] font-bold leading-[1.05] tracking-[-0.045em] text-slate-800 md:text-[2.75rem] lg:text-[3.45rem]">
-              <span className="block">AI That Understands</span>
-              <span className="block">Insurance Claims —</span>
-              <span className="block text-[var(--ch-blue)]">Like a Doctor,</span>
-              <span className="block text-[var(--ch-blue)]">Auditor, and Investigator</span>
-            </h1>
+            <motion.h1 variants={heroItem} className="mt-6 max-w-[14ch] text-[2.35rem] font-bold leading-[1.04] tracking-[-0.055em] text-slate-900 sm:max-w-[15ch] sm:text-[3rem] lg:max-w-[16ch] lg:text-[4.1rem]">
+              <span className="block">Transparent claims</span>
+              <span className="block text-[var(--ch-blue-dark)]">operations built for</span>
+              <span className="mt-2 block text-slate-800">speed, trust, and explainable decisions</span>
+            </motion.h1>
 
-            <p className="mt-8 max-w-[35rem] text-[14px] leading-7 text-[var(--ch-muted)] md:text-[15px]">
-              ClaimHeart automates claim processing, detects fraud in real-time, and explains every decision with full transparency.
-            </p>
-            <p className="mt-4 text-[13px] font-medium italic text-[var(--ch-subtle)]">
-              "Smart enough to decide. Human enough to explain why."
-            </p>
+            <motion.p variants={heroItem} className="mt-7 max-w-[38rem] text-sm leading-7 text-[var(--ch-muted)] sm:text-base sm:leading-8 lg:text-lg">
+              ClaimHeart is a healthcare claims intelligence platform for intake, review, policy reasoning, fraud controls, explainable decisions, and stakeholder communication across the full claim lifecycle.
+            </motion.p>
+            <motion.p variants={heroItem} className="mt-4 text-sm font-medium italic text-[var(--ch-subtle)]">
+              "Built for healthcare claims teams that need automation without losing control or clarity."
+            </motion.p>
 
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link
-                href="/dashboard"
-                className="inline-flex items-center gap-2 rounded-2xl bg-[var(--ch-blue-dark)] px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(47,111,178,0.22)] transition hover:-translate-y-px hover:bg-[var(--ch-blue)]"
-              >
-                <Play className="h-4 w-4 fill-white" />
-                View Demo
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                href="#how-it-works"
-                className="inline-flex items-center gap-2 rounded-2xl border-2 border-[var(--ch-blue-border)] bg-white/80 px-6 py-3 text-sm font-semibold text-[var(--ch-blue-dark)] transition hover:bg-white"
-              >
-                <Workflow className="h-4 w-4" />
-                See How It Works
-              </Link>
-            </div>
+            <motion.div variants={heroItem} className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
+              <motion.div whileHover={{ y: -1, scale: 1.01 }} whileTap={{ scale: 0.985 }}>
+                <Link href="/dashboard" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-[var(--ch-blue-dark)] px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(47,111,178,0.22)] transition-all hover:bg-[var(--ch-blue)] hover:shadow-[0_22px_44px_rgba(47,111,178,0.28)]">
+                  <Play className="h-4 w-4 fill-white" />
+                  View Demo
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </motion.div>
+              <motion.div whileHover={{ y: -1, scale: 1.01 }} whileTap={{ scale: 0.985 }}>
+                <Link href="#how-it-works" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-[var(--ch-blue-border)] bg-white/80 px-6 py-3 text-sm font-semibold text-[var(--ch-blue-dark)] shadow-[0_10px_24px_rgba(148,163,184,0.12)] backdrop-blur transition-all hover:bg-white">
+                  See How It Works
+                </Link>
+              </motion.div>
+            </motion.div>
 
-            {/* Social proof */}
-            <div className="mt-10 flex items-center gap-3">
+            <motion.div variants={heroItem} className="mt-10 flex flex-wrap items-center gap-4 rounded-3xl border border-white/60 bg-white/65 px-5 py-4 shadow-[0_12px_34px_rgba(15,23,42,0.06)] backdrop-blur">
               <div className="flex">
-                {["AM","PN","RS","KV"].map((av, i) => (
-                  <div
-                    key={av}
-                    className={`flex h-8 w-8 items-center justify-center rounded-full border-2 border-white text-[10px] font-bold text-white ${["bg-[var(--ch-blue)]","bg-green-500","bg-amber-500","bg-violet-500"][i]}`}
-                    style={{ marginLeft: i > 0 ? -10 : 0 }}
-                  >
-                    {av}
+                {["AM", "PN", "RS", "KV"].map((avatar, index) => (
+                  <div key={avatar} className={`flex h-9 w-9 items-center justify-center rounded-full border-2 border-white text-[10px] font-bold text-white ${["bg-[var(--ch-blue)]", "bg-green-500", "bg-amber-500", "bg-violet-500"][index]}`} style={{ marginLeft: index > 0 ? -10 : 0 }}>
+                    {avatar}
                   </div>
                 ))}
               </div>
               <div>
-                <div className="flex gap-0.5">
-                  {[1,2,3,4,5].map(s => <Star key={s} className="h-3 w-3 fill-amber-400 text-amber-400" />)}
+                <div className="flex gap-1">
+                  {[1, 2, 3, 4, 5].map((star) => <Star key={star} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />)}
                 </div>
-                <p className="text-[11px] text-[var(--ch-subtle)]">Trusted by 50+ insurers across India</p>
+                <p className="mt-1 text-xs text-[var(--ch-subtle)]">Designed for insurers, hospitals, TPAs, and patient-facing operations teams</p>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          {/* Right — Dashboard preview */}
-          <div className="relative w-full max-w-[42rem] flex-1">
-            <div className="absolute inset-x-10 inset-y-8 -z-10 rounded-[2rem] bg-[radial-gradient(circle,rgba(74,142,219,0.18)_0%,transparent_70%)] blur-2xl" />
-            <div className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-[0_32px_80px_rgba(15,23,42,0.16)]">
-              <div className="flex items-center justify-between bg-[var(--ch-blue-dark)] px-6 py-4">
-                <div className="flex items-center gap-2 text-xs font-bold text-white">
-                  <Heart className="h-4 w-4 fill-white text-white" />
-                  ClaimHeart - Claim Detail
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="h-3 w-3 rounded-full bg-red-500" />
-                  <span className="h-3 w-3 rounded-full bg-amber-400" />
-                  <span className="h-3 w-3 rounded-full bg-green-500" />
-                </div>
+          <div className="relative flex w-full flex-1 justify-center lg:justify-end">
+            <motion.div
+              className="relative w-full max-w-xl rounded-[1.75rem] border border-white/60 bg-white/70 p-3.5 shadow-[0_24px_72px_rgba(15,23,42,0.14)] backdrop-blur-md sm:p-4"
+              variants={previewItem}
+              initial="hidden"
+              animate="show"
+            >
+              <div className="absolute -right-4 -top-4 hidden rounded-2xl border border-emerald-200 bg-white/90 px-4 py-3 shadow-[0_12px_24px_rgba(15,23,42,0.08)] backdrop-blur md:block">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-600">Workflow synced</p>
+                <p className="mt-1 text-sm font-semibold text-slate-900">Intake, RAG, review, and notification</p>
               </div>
-              <div className="space-y-5 bg-slate-50 p-6">
-                <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_24px_rgba(15,23,42,0.06)]">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-xs font-semibold text-[var(--ch-muted)]">CLM-2026-01246</p>
-                      <p className="mt-1 text-xl font-bold tracking-[-0.03em] text-slate-800 md:text-[1.3rem]">
-                        Priya Sharma - Dengue Treatment
-                      </p>
-                    </div>
-                    <span className="inline-flex items-center gap-1 rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-red-500 md:text-sm">
-                      <AlertTriangle className="h-4 w-4" />
-                      Fraud Flag
-                    </span>
+              <div className="overflow-hidden rounded-[1.35rem] border border-[#143046] bg-[#07111c]">
+                <div className="flex items-center justify-between border-b border-emerald-500/10 bg-[#0d1825] px-4 py-3.5">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-300/80">ClaimHeart live console</p>
+                    <p className="mt-1 text-sm font-semibold text-emerald-100">Operational trace from intake to decision</p>
                   </div>
-                  <div className="mt-5 flex flex-wrap gap-3">
-                    <span className="rounded-full bg-[var(--ch-blue-light)] px-3 py-1 text-xs font-semibold text-[var(--ch-blue)] md:text-sm">Rs4,80,000</span>
-                    <span className="rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-500 md:text-sm">Apollo Hospital</span>
+                  <div className="flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
                   </div>
                 </div>
-                <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-                  <div className="rounded-2xl border border-red-200 bg-white p-4 text-center shadow-sm">
-                    <p className="text-[1.9rem] font-bold text-red-500">0.94</p>
-                    <p className="mt-1 text-sm text-[var(--ch-muted)]">Fraud Score</p>
-                    <p className="mt-1 text-sm font-medium text-red-500">High</p>
-                  </div>
-                  <div className="rounded-2xl border border-[var(--ch-blue-border)] bg-white p-4 text-center shadow-sm">
-                    <p className="text-[1.9rem] font-bold text-[var(--ch-blue)]">Sec 4.2</p>
-                    <p className="mt-1 text-sm text-[var(--ch-muted)]">Policy Match</p>
-                    <p className="mt-1 text-sm font-medium text-green-500">Cited</p>
-                  </div>
-                  <div className="rounded-2xl border border-amber-200 bg-white p-4 text-center shadow-sm">
-                    <p className="text-[1.9rem] font-bold text-amber-500">Escalated</p>
-                    <p className="mt-1 text-sm text-[var(--ch-muted)]">Decision</p>
-                    <p className="mt-1 text-sm font-medium text-amber-500">SIU</p>
-                  </div>
-                </div>
-                <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                  <p className="text-sm font-semibold text-slate-700">AI Pipeline</p>
-                  <div className="mt-4 flex flex-wrap items-center gap-2">
-                    {mockPipeline.map((item, index) => (
-                      <div key={item} className="flex items-center gap-2">
-                        <div className={`rounded-2xl border px-4 py-2 text-center ${index < 3 ? "border-[var(--ch-blue-border)] bg-[var(--ch-blue-light)]" : "border-slate-200 bg-slate-50"}`}>
-                          <span className={`block text-xs font-medium ${index < 3 ? "text-[var(--ch-blue-dark)]" : "text-slate-400"}`}>{item}</span>
-                          <span className={`mx-auto mt-2 block h-2.5 w-2.5 rounded-full ${index < 3 ? "bg-green-500" : "bg-slate-300"}`} />
-                        </div>
-                        {index < mockPipeline.length - 1 && <ChevronRight className="h-4 w-4 text-slate-300" />}
-                      </div>
+
+                <div className="border-b border-emerald-500/10 bg-[#091523] px-4 py-3">
+                  <div className="flex flex-wrap gap-2">
+                    {['Hospital intake', 'RAG grounding', 'Insurer review', 'Patient update'].map((item) => (
+                      <span key={item} className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-[11px] font-semibold text-emerald-300">
+                        {item}
+                      </span>
                     ))}
                   </div>
                 </div>
+
+                <div className="relative min-h-[23rem] overflow-hidden px-4 py-4 font-mono text-[12.5px] leading-7 text-emerald-300 sm:min-h-[24rem] sm:text-[13px]">
+                  <motion.div
+                    aria-hidden="true"
+                    animate={{ y: ['0%', '1200%'] }}
+                    transition={{ duration: 5.5, repeat: Infinity, ease: 'linear' }}
+                    className="pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-emerald-400/70 to-transparent"
+                  />
+                  <div className="space-y-2">
+                    {consoleLines.slice(0, visibleConsoleCount).map((line, index) => (
+                      <motion.div
+                        key={`${line}-${index}`}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.22, ease: 'easeOut' }}
+                        className="flex items-start gap-3"
+                      >
+                        <span className="mt-[9px] h-2 w-2 shrink-0 rounded-full bg-emerald-400" />
+                        <span className="text-emerald-200/95">{line}</span>
+                      </motion.div>
+                    ))}
+                    <motion.div
+                      animate={{ opacity: [0.35, 1, 0.35] }}
+                      transition={{ duration: 1, repeat: Infinity, ease: 'easeInOut' }}
+                      className="inline-flex h-5 w-2 rounded-sm bg-emerald-400/80"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ── TRUSTED BY ────────────────────────────────────────────────────── */}
-      <section className="border-b border-slate-100 bg-white px-6 py-5 md:px-12 lg:px-20">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-4">
-          <span className="text-[11px] font-700 uppercase tracking-widest text-[var(--ch-subtle)]">Trusted by</span>
-          {trustedBy.map((name) => (
-            <div
-              key={name}
-              className="rounded-lg border border-slate-200 bg-slate-50 px-5 py-2 text-[13px] font-600 text-slate-500"
-            >
-              {name}
+      <section className="border-b border-slate-100 bg-white/90 px-4 py-5 backdrop-blur sm:px-6 md:px-12 lg:px-20">
+        <div className="mx-auto max-w-7xl overflow-hidden rounded-full border border-slate-200/80 bg-slate-50/80 px-4 py-3 shadow-[0_8px_24px_rgba(15,23,42,0.04)] backdrop-blur">
+          <div className="flex items-center gap-4 whitespace-nowrap text-sm text-slate-600">
+            <span className="shrink-0 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--ch-subtle)]">Trusted by</span>
+            <div className="min-w-0 flex-1 overflow-hidden">
+              <motion.div
+                animate={{ x: ['0%', '-33.333%'] }}
+                transition={{ repeat: Infinity, duration: 22, ease: 'linear' }}
+                className="flex min-w-max items-center gap-3 pr-3"
+              >
+                {trustedLoop.map((name, index) => (
+                  <div key={`${name}-${index}`} className="rounded-full border border-slate-200 bg-white px-4 py-2 text-[13px] font-semibold text-slate-600 shadow-[0_2px_10px_rgba(15,23,42,0.04)]">
+                    {name}
+                  </div>
+                ))}
+              </motion.div>
             </div>
+          </div>
+        </div>
+      </section>
+      <section className="relative border-b border-slate-200 bg-white px-4 py-14 sm:px-6 md:px-12 lg:px-20">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--ch-blue-border)] to-transparent" />
+        <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {stats.map((item, index) => (
+            <Reveal key={item.label} delay={index * 80}>
+              <article className="rounded-[1.5rem] border border-slate-200 bg-white p-6 shadow-[0_14px_30px_rgba(15,23,42,0.05)] transition-all hover:-translate-y-1 hover:shadow-[0_18px_38px_rgba(15,23,42,0.08)]">
+                <p className={`text-[2.4rem] font-bold tracking-[-0.05em] ${item.tone}`}>
+                  <CountUp value={item.value} prefix={item.prefix} suffix={item.suffix} />
+                </p>
+                <p className="mt-2 text-sm font-semibold text-slate-900">{item.label}</p>
+                <p className="mt-2 text-sm text-[var(--ch-subtle)]">{item.sub}</p>
+              </article>
+            </Reveal>
           ))}
         </div>
       </section>
 
-      {/* ── STATS ─────────────────────────────────────────────────────────── */}
-      <section className="border-b border-slate-200 bg-white px-6 py-12 md:px-12 lg:px-20">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 md:grid-cols-4">
-          {stats.map((item) => (
-            <div key={item.label} className="rounded-2xl border border-slate-100 p-6 text-center">
-              <p className={`text-[2.2rem] font-bold tracking-[-0.03em] md:text-[2.25rem] ${item.tone}`}>{item.value}</p>
-              <p className="mt-2 text-sm font-semibold text-slate-800">{item.label}</p>
-              <p className="mt-1 text-xs text-[var(--ch-subtle)]">{item.sub}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── PROBLEM ───────────────────────────────────────────────────────── */}
-      <section id="features" className="bg-[var(--ch-surface)] px-6 py-24 md:px-12 lg:px-20">
+      <section id="features" className="relative bg-[var(--ch-surface)] px-4 py-24 sm:px-6 md:px-12 lg:px-20">
+        <div className="absolute left-0 top-20 h-48 w-48 rounded-full bg-red-100/40 blur-3xl" />
         <div className="mx-auto max-w-7xl">
-          <div className="mx-auto mb-14 max-w-3xl text-center">
-            <h2 className="text-[2rem] font-bold tracking-[-0.03em] text-slate-900 md:text-[2.2rem]">
-              The Healthcare Claims System is Broken
-            </h2>
-            <p className="mt-5 text-base leading-8 text-[var(--ch-muted)] md:text-lg">
-              A broken system costs patients, hospitals, and insurers billions annually and nobody has visibility into why.
-            </p>
-          </div>
+          <Reveal className="mx-auto mb-14 max-w-3xl text-center">
+            <h2 className="text-[2rem] font-bold tracking-[-0.03em] text-slate-900 md:text-[2.2rem]">Why Claims Operations Need Reinvention</h2>
+            <p className="mt-5 text-base leading-8 text-[var(--ch-muted)] md:text-lg">Legacy claims workflows are slow, opaque, and fragmented across stakeholders. Modern teams need a system built for speed, control, and explainability.</p>
+          </Reveal>
           <div className="grid gap-7 md:grid-cols-2 xl:grid-cols-4">
-            {problems.map((card) => (
-              <article
-                key={card.label}
-                className="rounded-[1.75rem] border border-slate-200 bg-white p-7 shadow-[0_8px_30px_rgba(15,23,42,0.05)] transition hover:-translate-y-1"
-              >
-                <div className={`mb-6 flex h-12 w-12 items-center justify-center rounded-2xl ${card.bg}`}>
-                  <card.icon className={`h-5 w-5 ${card.tone}`} />
-                </div>
-                <p className={`text-3xl font-bold tracking-[-0.04em] ${card.tone}`}>{card.stat}</p>
-                <h3 className="mt-4 text-xl font-bold tracking-[-0.03em] text-slate-900">{card.label}</h3>
-                <p className="mt-4 text-base leading-8 text-[var(--ch-muted)]">{card.desc}</p>
-              </article>
+            {problems.map((card, index) => (
+              <Reveal key={card.label} delay={index * 90}>
+                <article className="rounded-[1.75rem] border border-slate-200 bg-white p-7 shadow-[0_10px_30px_rgba(15,23,42,0.05)] transition-all hover:-translate-y-1 hover:shadow-[0_18px_38px_rgba(15,23,42,0.08)]">
+                  <div className={`mb-6 flex h-12 w-12 items-center justify-center rounded-2xl ${card.bg}`}>
+                    <card.icon className={`h-5 w-5 ${card.tone}`} />
+                  </div>
+                  <p className={`text-3xl font-bold tracking-[-0.04em] ${card.tone}`}>{card.stat}</p>
+                  <h3 className="mt-4 text-xl font-bold tracking-[-0.03em] text-slate-900">{card.label}</h3>
+                  <p className="mt-4 text-base leading-8 text-[var(--ch-muted)]">{card.desc}</p>
+                </article>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── AGENTS ────────────────────────────────────────────────────────── */}
-      <section className="bg-white px-6 py-24 md:px-12 lg:px-20">
+      <section className="bg-white px-4 py-24 sm:px-6 md:px-12 lg:px-20">
         <div className="mx-auto max-w-7xl">
-          <div className="mx-auto mb-14 max-w-3xl text-center">
-            <h2 className="text-[2rem] font-bold tracking-[-0.03em] text-slate-900 md:text-[2.2rem]">Meet ClaimHeart</h2>
-            <p className="mt-5 text-base leading-8 text-[var(--ch-muted)] md:text-lg">
-              Four specialized AI agents working in parallel, each an expert, together unstoppable.
-            </p>
-          </div>
+          <Reveal className="mx-auto mb-14 max-w-3xl text-center">
+            <h2 className="text-[2rem] font-bold tracking-[-0.03em] text-slate-900 md:text-[2.2rem]">Platform Architecture</h2>
+            <p className="mt-5 text-base leading-8 text-[var(--ch-muted)] md:text-lg">A modular claims intelligence stack designed to support intake, review, coordination, and explainable decision-making at scale.</p>
+          </Reveal>
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-            {agents.map((agent) => (
-              <article key={agent.name} className={`rounded-[1.75rem] border p-7 shadow-[0_8px_30px_rgba(15,23,42,0.04)] transition hover:-translate-y-1 ${agent.card}`}>
-                <div className={`mb-5 flex h-14 w-14 items-center justify-center rounded-2xl ${agent.iconWrap}`}>
-                  <agent.icon className={`h-6 w-6 ${agent.tone}`} />
-                </div>
-                <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${agent.iconWrap} ${agent.tone}`}>
-                  {agent.tag}
-                </span>
-                <h3 className="mt-4 text-lg font-bold tracking-[-0.03em] text-slate-900">{agent.name}</h3>
-                <p className="mt-3 text-sm leading-7 text-[var(--ch-muted)] md:text-base">{agent.desc}</p>
-              </article>
+            {agents.map((agent, index) => (
+              <Reveal key={agent.name} delay={index * 90}>
+                <article className={`rounded-[1.75rem] border p-7 shadow-[0_8px_30px_rgba(15,23,42,0.04)] transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_18px_36px_rgba(15,23,42,0.08)] ${agent.card}`}>
+                  <div className={`mb-5 flex h-14 w-14 items-center justify-center rounded-2xl ${agent.iconWrap}`}>
+                    <agent.icon className={`h-6 w-6 ${agent.tone}`} />
+                  </div>
+                  <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${agent.iconWrap} ${agent.tone}`}>{agent.tag}</span>
+                  <h3 className="mt-4 text-lg font-bold tracking-[-0.03em] text-slate-900">{agent.name}</h3>
+                  <p className="mt-3 text-sm leading-7 text-[var(--ch-muted)] md:text-base">{agent.desc}</p>
+                </article>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ──────────────────────────────────────────────────── */}
-      <section id="how-it-works" className="bg-[var(--ch-blue-light)] px-6 py-24 md:px-12 lg:px-20">
+      <section id="how-it-works" className="bg-[linear-gradient(180deg,#eef4fb_0%,#f8fafc_100%)] px-4 py-24 sm:px-6 md:px-12 lg:px-20">
         <div className="mx-auto max-w-7xl">
-          <div className="mx-auto mb-16 max-w-3xl text-center">
-            <h2 className="text-[2rem] font-bold tracking-[-0.03em] text-slate-900 md:text-[2.2rem]">How It Works</h2>
-            <p className="mt-5 text-base leading-8 text-[var(--ch-muted)] md:text-lg">From PDF upload to decision in under 18 seconds.</p>
-          </div>
-          <div className="grid gap-6 md:grid-cols-5">
+          <Reveal className="mx-auto mb-16 max-w-3xl text-center">
+            <h2 className="text-[2rem] font-bold tracking-[-0.03em] text-slate-900 md:text-[2.2rem]">Workflow Orchestration</h2>
+            <p className="mt-5 text-base leading-8 text-[var(--ch-muted)] md:text-lg">A connected workflow spanning document intake, evidence grounding, adjudication, escalation, and communication.</p>
+          </Reveal>
+          <div className="grid gap-6 lg:grid-cols-5">
             {steps.map((step, index) => (
-              <div key={step.step} className="relative text-center">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--ch-blue)] text-white shadow-[0_0_0_6px_rgba(199,219,244,0.8)]">
-                  <step.icon className="h-6 w-6" />
+              <Reveal key={step.step} delay={index * 110}>
+                <div className="relative rounded-[1.5rem] border border-white/70 bg-white/80 p-6 text-center shadow-[0_10px_30px_rgba(15,23,42,0.05)] backdrop-blur">
+                  {index < steps.length - 1 ? (
+                    <div className="landing-line-grow absolute left-[calc(100%-1rem)] top-12 hidden h-[2px] w-[calc(100%-0.5rem)] origin-left bg-gradient-to-r from-[var(--ch-blue)]/70 to-[var(--ch-blue-border)] lg:block" style={{ animationDelay: `${0.25 + index * 0.15}s` }} />
+                  ) : null}
+                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--ch-blue)] text-white shadow-[0_0_0_6px_rgba(199,219,244,0.8)]">
+                    <step.icon className="h-6 w-6" />
+                  </div>
+                  <p className="mt-6 text-xs font-bold tracking-[0.18em] text-[var(--ch-blue-dark)]">STEP {step.step}</p>
+                  <h3 className="mt-3 text-lg font-bold tracking-[-0.03em] text-slate-900">{step.title}</h3>
+                  <p className="mt-3 text-sm leading-7 text-[var(--ch-muted)]">{step.desc}</p>
                 </div>
-                {index < steps.length - 1 && (
-                  <div className="absolute left-[calc(50%+2.5rem)] top-7 hidden h-px w-[calc(100%-1rem)] bg-[var(--ch-blue-border)] md:block" />
-                )}
-                <p className="mt-6 text-xs font-bold tracking-[0.18em] text-[var(--ch-blue-dark)]">STEP {step.step}</p>
-                <h3 className="mt-3 text-lg font-bold tracking-[-0.03em] text-slate-900">{step.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-[var(--ch-muted)]">{step.desc}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── DIFFERENTIATORS ───────────────────────────────────────────────── */}
-      <section className="bg-white px-6 py-24 md:px-12 lg:px-20">
+      <section className="bg-white px-4 py-24 sm:px-6 md:px-12 lg:px-20">
         <div className="mx-auto max-w-7xl">
-          <div className="mx-auto mb-14 max-w-3xl text-center">
-            <h2 className="text-[2rem] font-bold tracking-[-0.03em] text-slate-900 md:text-[2.2rem]">Why ClaimHeart Wins</h2>
-            <p className="mt-5 text-base leading-8 text-[var(--ch-muted)] md:text-lg">
-              Built differently — from architecture to audit trail.
-            </p>
-          </div>
+          <Reveal className="mx-auto mb-14 max-w-3xl text-center">
+            <h2 className="text-[2rem] font-bold tracking-[-0.03em] text-slate-900 md:text-[2.2rem]">Why Teams Build On ClaimHeart</h2>
+            <p className="mt-5 text-base leading-8 text-[var(--ch-muted)] md:text-lg">Designed as a durable operating layer for healthcare claims, not a point solution for one workflow step.</p>
+          </Reveal>
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-            {differentiators.map((item) => (
-              <article key={item.title} className="rounded-[1.75rem] border border-[var(--ch-blue-border)] bg-[var(--ch-blue-light)] p-7">
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--ch-blue)] text-white">
-                  <item.icon className="h-5 w-5" />
-                </div>
-                <h3 className="text-lg font-bold tracking-[-0.03em] text-slate-900">{item.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-[var(--ch-muted)] md:text-base">{item.desc}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── REAL-WORLD IMPACT ─────────────────────────────────────────────── */}
-      <section className="bg-[var(--ch-surface)] px-6 py-24 md:px-12 lg:px-20">
-        <div className="mx-auto max-w-7xl">
-          <div className="mx-auto mb-14 max-w-3xl text-center">
-            <h2 className="text-[2rem] font-bold tracking-[-0.03em] text-slate-900 md:text-[2.2rem]">Real-World Impact</h2>
-            <p className="mt-5 text-base leading-8 text-[var(--ch-muted)] md:text-lg">
-              Numbers that matter — from production deployments.
-            </p>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {impacts.map((item) => (
-              <article key={item.label} className={`rounded-[1.75rem] border p-8 text-center shadow-[0_8px_30px_rgba(15,23,42,0.04)] ${item.card}`}>
-                <item.icon className={`mx-auto h-9 w-9 ${item.tone}`} />
-                <p className={`mt-4 text-3xl font-bold tracking-[-0.04em] ${item.tone}`}>{item.value}</p>
-                <h3 className="mt-4 text-lg font-bold tracking-[-0.03em] text-slate-900">{item.label}</h3>
-                <p className="mt-3 text-sm leading-7 text-[var(--ch-muted)] md:text-base">{item.sub}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── TESTIMONIALS ──────────────────────────────────────────────────── */}
-      <section className="bg-white px-6 py-24 md:px-12 lg:px-20">
-        <div className="mx-auto max-w-7xl">
-          <div className="mx-auto mb-14 max-w-3xl text-center">
-            <h2 className="text-[2rem] font-bold tracking-[-0.03em] text-slate-900 md:text-[2.2rem]">
-              What Insurers Are Saying
-            </h2>
-            <p className="mt-5 text-base leading-8 text-[var(--ch-muted)] md:text-lg">
-              From TPA desks to C-suite — real voices, real results.
-            </p>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {testimonials.map((t) => (
-              <article
-                key={t.name}
-                className="rounded-[1.75rem] border border-slate-200 bg-[var(--ch-surface)] p-7 shadow-[0_8px_30px_rgba(15,23,42,0.04)]"
-              >
-                <div className="mb-4 flex gap-1">
-                  {[1,2,3,4,5].map(s => <Star key={s} className="h-4 w-4 fill-amber-400 text-amber-400" />)}
-                </div>
-                <p className="text-sm italic leading-7 text-[var(--ch-muted)]">"{t.text}"</p>
-                <div className="mt-6 flex items-center gap-3">
-                  <div className={`flex h-10 w-10 items-center justify-center rounded-full text-xs font-bold text-white ${t.avatarBg}`}>
-                    {t.avatar}
+            {differentiators.map((item, index) => (
+              <Reveal key={item.title} delay={index * 80}>
+                <article className="rounded-[1.75rem] border border-[var(--ch-blue-border)] bg-[var(--ch-blue-light)] p-7 transition-all hover:-translate-y-1">
+                  <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--ch-blue)] text-white">
+                    <item.icon className="h-5 w-5" />
                   </div>
+                  <h3 className="text-lg font-bold tracking-[-0.03em] text-slate-900">{item.title}</h3>
+                  <p className="mt-3 text-sm leading-7 text-[var(--ch-muted)] md:text-base">{item.desc}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[var(--ch-surface)] px-4 py-24 sm:px-6 md:px-12 lg:px-20">
+        <div className="mx-auto max-w-7xl">
+          <Reveal className="mx-auto mb-14 max-w-3xl text-center">
+            <h2 className="text-[2rem] font-bold tracking-[-0.03em] text-slate-900 md:text-[2.2rem]">Operational Outcomes</h2>
+            <p className="mt-5 text-base leading-8 text-[var(--ch-muted)] md:text-lg">Performance improvements that matter across insurers, providers, TPAs, and care operations teams.</p>
+          </Reveal>
+          <div className="grid gap-6 md:grid-cols-3">
+            {impacts.map((item, index) => (
+              <Reveal key={item.label} delay={index * 90}>
+                <article className={`rounded-[1.75rem] border p-8 text-center shadow-[0_8px_30px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-1 ${item.card}`}>
+                  <item.icon className={`mx-auto h-9 w-9 ${item.tone}`} />
+                  <p className={`mt-4 text-3xl font-bold tracking-[-0.04em] ${item.tone}`}>{item.value}</p>
+                  <h3 className="mt-4 text-lg font-bold tracking-[-0.03em] text-slate-900">{item.label}</h3>
+                  <p className="mt-3 text-sm leading-7 text-[var(--ch-muted)] md:text-base">{item.sub}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section className="bg-white px-4 py-24 sm:px-6 md:px-12 lg:px-20">
+        <div className="mx-auto max-w-7xl">
+          <Reveal className="mx-auto mb-12 max-w-3xl text-center">
+            <h2 className="text-[2rem] font-bold tracking-[-0.03em] text-slate-900 md:text-[2.2rem]">What Claims Leaders Are Saying</h2>
+            <p className="mt-4 text-sm leading-7 text-[var(--ch-muted)] md:text-base">Simple, readable feedback from people thinking about claims operations, review quality, and patient communication.</p>
+          </Reveal>
+
+          <div className="rounded-[1.7rem] border border-slate-200 bg-slate-50/70 p-3 sm:p-4 lg:p-5">
+            <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:gap-4">
+              {testimonials.map((t) => (
+                <article key={t.name} className="flex min-h-[15rem] w-[17.25rem] shrink-0 snap-start flex-col justify-between rounded-[1.35rem] border border-slate-200 bg-white p-5 shadow-[0_4px_14px_rgba(15,23,42,0.04)] sm:w-[18.75rem] lg:w-[19.5rem]">
                   <div>
-                    <p className="text-sm font-bold text-slate-800">{t.name}</p>
-                    <p className="text-xs text-[var(--ch-subtle)]">{t.role} · {t.company}</p>
+                    <div className="flex items-center gap-1">
+                      {[1, 2, 3, 4, 5].map((star) => <Star key={star} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />)}
+                    </div>
+                    <p className="mt-4 text-[13.5px] leading-6 text-slate-700 sm:text-sm">"{t.text}"</p>
                   </div>
-                </div>
-              </article>
-            ))}
+
+                  <div className="mt-5 flex items-center gap-3 border-t border-slate-100 pt-3.5">
+                    <div className={`flex h-9 w-9 items-center justify-center rounded-full text-[11px] font-bold text-white ${t.avatarBg}`}>{t.avatar}</div>
+                    <div className="min-w-0">
+                      <p className="truncate text-[13px] font-semibold text-slate-900 sm:text-sm">{t.name}</p>
+                      <p className="truncate text-[11px] text-[var(--ch-subtle)]">{t.role}</p>
+                      <p className="truncate text-[11px] text-[var(--ch-muted)]">{t.company}</p>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-
-      {/* ── FAQ ───────────────────────────────────────────────────────────── */}
-      <section className="bg-white px-6 py-24 md:px-12 lg:px-20">
+      <section className="bg-white px-4 py-24 sm:px-6 md:px-12 lg:px-20">
         <div className="mx-auto max-w-3xl">
-          <div className="mb-14 text-center">
-            <h2 className="text-[2rem] font-bold tracking-[-0.03em] text-slate-900 md:text-[2.2rem]">
-              Frequently Asked Questions
-            </h2>
-            <p className="mt-5 text-base leading-8 text-[var(--ch-muted)] md:text-lg">
-              Everything you need to know before getting started.
-            </p>
-          </div>
+          <Reveal className="mb-14 text-center">
+            <h2 className="text-[2rem] font-bold tracking-[-0.03em] text-slate-900 md:text-[2.2rem]">Frequently Asked Questions</h2>
+            <p className="mt-5 text-base leading-8 text-[var(--ch-muted)] md:text-lg">The core questions teams ask when evaluating a long-term healthcare claims platform.</p>
+          </Reveal>
           <div className="space-y-3">
-            {faqs.map((faq, i) => (
-              <div
-                key={i}
-                className="overflow-hidden rounded-2xl border border-slate-200"
-              >
-                <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className={`flex w-full items-center justify-between px-6 py-5 text-left transition ${openFaq === i ? "bg-[var(--ch-blue-light)]" : "bg-white hover:bg-slate-50"}`}
-                >
-                  <span className="text-[15px] font-semibold text-slate-800">{faq.q}</span>
-                  <span
-                    className={`ml-4 shrink-0 text-2xl font-light text-[var(--ch-blue)] transition-transform duration-200 ${openFaq === i ? "rotate-45" : ""}`}
-                  >
-                    +
-                  </span>
-                </button>
-                {openFaq === i && (
-                  <div className="bg-[var(--ch-blue-light)] px-6 pb-5">
-                    <p className="text-sm leading-7 text-[var(--ch-muted)]">{faq.a}</p>
-                  </div>
-                )}
-              </div>
+            {faqs.map((faq, index) => (
+              <Reveal key={faq.q} delay={index * 60}>
+                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_6px_18px_rgba(15,23,42,0.04)]">
+                  <button onClick={() => setOpenFaq(openFaq === index ? null : index)} className={`flex w-full items-center justify-between px-6 py-5 text-left transition-all ${openFaq === index ? "bg-[var(--ch-blue-light)]" : "bg-white hover:bg-slate-50"}`}>
+                    <span className="text-[15px] font-semibold text-slate-800">{faq.q}</span>
+                    <span className={`ml-4 shrink-0 text-2xl font-light text-[var(--ch-blue)] transition-transform duration-200 ${openFaq === index ? "rotate-45" : ""}`}>+</span>
+                  </button>
+                  {openFaq === index ? <div className="bg-[var(--ch-blue-light)] px-6 pb-5"><p className="text-sm leading-7 text-[var(--ch-muted)]">{faq.a}</p></div> : null}
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── CTA BANNER ────────────────────────────────────────────────────── */}
-      <section className="bg-[linear-gradient(135deg,#2f6fb2_0%,#4a8edb_100%)] px-6 py-24 text-center md:px-12">
-        <div className="mx-auto max-w-2xl">
-          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-3xl bg-white/15 text-white">
+      <section className="relative overflow-hidden bg-[linear-gradient(135deg,#2f6fb2_0%,#4a8edb_100%)] px-4 py-24 text-center sm:px-6 md:px-12">
+        <div className="absolute left-1/2 top-0 h-56 w-56 -translate-x-1/2 rounded-full bg-white/10 blur-3xl" />
+        <div className="absolute bottom-0 right-[10%] h-40 w-40 rounded-full bg-sky-200/20 blur-3xl" />
+        <Reveal className="mx-auto max-w-2xl">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-3xl bg-white/15 text-white backdrop-blur">
             <Heart className="h-8 w-8 fill-white text-white" />
           </div>
-          <h2 className="text-[2rem] font-bold tracking-[-0.03em] text-white md:text-[2.2rem]">
-            Ready to Transform Healthcare Claims?
-          </h2>
-          <p className="mt-6 text-base leading-7 text-white/80 md:text-lg">
-            Join leading health insurers using ClaimHeart to process faster, detect fraud earlier, and explain every decision transparently.
-          </p>
-          <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <Link
-              href="/dashboard"
-              className="inline-flex items-center gap-2 rounded-2xl bg-white px-6 py-3 text-sm font-semibold text-[var(--ch-blue-dark)] transition hover:-translate-y-px hover:shadow-xl"
-            >
+          <h2 className="text-[2rem] font-bold tracking-[-0.03em] text-white md:text-[2.2rem]">Ready to Modernize Claims Operations?</h2>
+          <p className="mt-6 text-base leading-7 text-white/80 md:text-lg">Adopt a unified operating layer for intake, review, explainable AI decisions, fraud controls, and patient-facing communication.</p>
+          <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row sm:flex-wrap">
+            <Link href="/dashboard" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-white px-6 py-3 text-sm font-semibold text-[var(--ch-blue-dark)] shadow-[0_16px_36px_rgba(15,23,42,0.18)] transition-all hover:-translate-y-px hover:shadow-[0_20px_44px_rgba(255,255,255,0.2)]">
               <Play className="h-4 w-4 fill-current" />
               View Demo
               <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link
-              href="/dashboard"
-              className="inline-flex items-center gap-2 rounded-2xl border-2 border-white px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
-            >
+            <Link href="/dashboard" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-white/60 px-6 py-3 text-sm font-semibold text-white transition-all hover:-translate-y-px hover:bg-white/10 hover:shadow-[0_0_24px_rgba(255,255,255,0.12)]">
               Open Dashboard
             </Link>
           </div>
-        </div>
+        </Reveal>
       </section>
-
-      {/* ── FOOTER ────────────────────────────────────────────────────────── */}
-      <footer className="bg-slate-900 px-6 pt-16 md:px-12 lg:px-20">
+      <footer className="bg-slate-900 px-4 pt-16 sm:px-6 md:px-12 lg:px-20">
         <div className="mx-auto max-w-7xl">
-
-          {/* Top grid */}
           <div className="grid gap-12 border-b border-slate-800 pb-12 md:grid-cols-2 lg:grid-cols-6">
-
-            {/* Brand column — spans 2 */}
             <div className="lg:col-span-2">
               <div className="mb-4 flex items-center gap-2.5">
                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--ch-blue)]">
@@ -700,27 +499,19 @@ export default function LandingPage() {
                 </div>
                 <span className="text-lg font-bold text-white">ClaimHeart</span>
               </div>
-              <p className="mb-6 max-w-[260px] text-sm leading-7 text-slate-400">
-                AI-powered claims orchestration helping Indian health insurers process faster, detect fraud in real-time, and maintain full audit transparency.
-              </p>
-              {/* Socials */}
+              <p className="mb-6 max-w-[260px] text-sm leading-7 text-slate-400">AI-powered claims orchestration helping Indian health insurers process faster, detect fraud in real-time, and maintain full audit transparency.</p>
               <div className="mb-6 flex gap-3">
-                {[Twitter, Linkedin, Github, Globe].map((Icon, i) => (
-                  <a
-                    key={i}
-                    href="#"
-                    className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-800 text-slate-400 transition hover:bg-slate-700 hover:text-white"
-                  >
+                {[Twitter, Linkedin, Github, Globe].map((Icon, index) => (
+                  <a key={index} href="#" className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-800 text-slate-400 transition-all hover:bg-slate-700 hover:text-white">
                     <Icon className="h-4 w-4" />
                   </a>
                 ))}
               </div>
-              {/* Contact */}
               <div className="space-y-2">
                 {[
-                  { Icon: Mail,      text: "hello@claimheart.in" },
+                  { Icon: Mail, text: "hello@claimheart.in" },
                   { Icon: PhoneCall, text: "+91 80 4567 8900" },
-                  { Icon: MapPin,    text: "Bengaluru, Karnataka" },
+                  { Icon: MapPin, text: "Bengaluru, Karnataka" },
                 ].map(({ Icon, text }) => (
                   <div key={text} className="flex items-center gap-2">
                     <Icon className="h-3.5 w-3.5 shrink-0 text-[var(--ch-blue)]" />
@@ -730,19 +521,13 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* Link columns */}
             {Object.entries(footerLinks).map(([heading, links]) => (
               <div key={heading}>
                 <p className="mb-4 text-[11px] font-bold uppercase tracking-widest text-white">{heading}</p>
                 <ul className="space-y-3">
                   {links.map((link) => (
                     <li key={link}>
-                      <Link
-                        href="#"
-                        className="text-sm text-slate-500 transition hover:text-slate-300"
-                      >
-                        {link}
-                      </Link>
+                      <Link href="#" className="text-sm text-slate-500 transition-all hover:text-slate-300">{link}</Link>
                     </li>
                   ))}
                 </ul>
@@ -750,20 +535,17 @@ export default function LandingPage() {
             ))}
           </div>
 
-          {/* Bottom bar */}
           <div className="flex flex-col items-center justify-between gap-4 py-6 md:flex-row">
             <div className="flex items-center gap-2">
               <Heart className="h-4 w-4 fill-[var(--ch-blue)] text-[var(--ch-blue)]" />
               <span className="text-sm font-bold text-white">ClaimHeart</span>
-              <span className="text-xs text-slate-600">— Smart enough to decide. Human enough to explain why.</span>
+              <span className="text-xs text-slate-600">- Smart enough to decide. Human enough to explain why.</span>
             </div>
             <div className="flex flex-wrap items-center gap-5">
               {["Privacy Policy", "Terms of Service", "Security"].map((link) => (
-                <Link key={link} href="#" className="text-xs text-slate-600 transition hover:text-slate-400">
-                  {link}
-                </Link>
+                <Link key={link} href="#" className="text-xs text-slate-600 transition-all hover:text-slate-400">{link}</Link>
               ))}
-              <span className="text-xs text-slate-600">© 2026 ClaimHeart. All rights reserved.</span>
+              <span className="text-xs text-slate-600">Copyright 2026 ClaimHeart. All rights reserved.</span>
             </div>
           </div>
         </div>
@@ -771,3 +553,11 @@ export default function LandingPage() {
     </div>
   );
 }
+
+
+
+
+
+
+
+

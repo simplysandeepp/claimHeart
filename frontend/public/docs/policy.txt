@@ -1,0 +1,470 @@
+================================================================================
+HDFC ERGO GENERAL INSURANCE COMPANY LIMITED
+INDIVIDUAL HEALTH INSURANCE POLICY — SMART HEALTH PLUS PLAN
+================================================================================
+
+Policy Document | UIN: HDFHLIP21142V012122
+IRDAI Registration No.: 146
+Registered Office: 1st Floor, HDFC House, 165-166 Backbay Reclamation,
+H.T. Parekh Marg, Churchgate, Mumbai — 400 020
+
+This Policy is a legal contract between the Policyholder and HDFC ERGO
+General Insurance Company Limited. Please read this document carefully
+and keep it in a safe place.
+
+================================================================================
+SECTION 1 — POLICY SCHEDULE (SPECIMEN)
+================================================================================
+
+Policy Number              : HDFC-ERGO-2025-784512   [Case 1 — Riya Sharma]
+Policy Number              : HDFC-ERGO-2025-991203   [Case 2 & 3 — Arjun Mehta]
+
+Policyholder Name          : As named in the schedule
+Plan Name                  : Smart Health Plus — Individual
+Policy Period              : 1 Year (renewable annually)
+Sum Insured                : INR 5,00,000 (Five Lakhs Only)
+Premium Paid               : INR 8,240 per annum (inclusive of GST)
+Policy Issue Date          : As per individual schedule
+Policy Start Date          : As per individual schedule
+Policy Expiry Date         : 364 days from Policy Start Date
+
+--- RIYA SHARMA SCHEDULE ---
+Policy Number              : HDFC-ERGO-2025-784512
+Policy Start Date          : 25 January 2025
+Policy Expiry Date         : 24 January 2026 (Year 1)
+Renewed For Year 2         : 25 January 2026 to 24 January 2027
+Insured Member             : Riya Sharma | DOB: 14 March 1995 | Female
+Sum Insured                : INR 5,00,000
+
+--- ARJUN MEHTA SCHEDULE ---
+Policy Number              : HDFC-ERGO-2025-991203
+Policy Start Date          : 10 March 2023
+Policy Expiry Date         : Continuously renewed | Active as of April 2026
+Insured Member             : Arjun Mehta | DOB: 22 July 1993 | Male
+Sum Insured                : INR 5,00,000
+
+================================================================================
+SECTION 2 — DEFINITIONS
+================================================================================
+
+2.1 HOSPITALISATION
+Admission to a Hospital for a minimum period of 24 consecutive hours for
+medically necessary treatment of an illness or injury.
+
+2.2 PRE-AUTHORISATION (PRE-AUTH)
+A written approval obtained from the Insurance Company or its designated
+Third Party Administrator (TPA) prior to a planned or emergency
+hospitalisation for cashless claim processing.
+
+2.3 WAITING PERIOD
+The time period from the Policy Start Date during which certain benefits
+under this Policy are not available to the Insured Person. Any claim
+arising from a condition during the applicable waiting period shall be
+rejected and no benefit shall be payable.
+
+2.4 MEDICALLY NECESSARY TREATMENT
+Any treatment, test, medication, or hospital stay that is:
+(a) Required for the diagnosis or treatment of the illness or injury
+(b) Consistent with the clinical protocols and standard medical guidelines
+(c) Not performed for experimental, cosmetic, or preventive purposes
+(d) Not in excess of the dosage, frequency, or duration prescribed by
+    recognised clinical standards
+
+2.5 INSURED PERSON
+The individual named in the Policy Schedule who is covered under this Policy.
+
+2.6 NETWORK HOSPITAL
+A hospital empanelled with HDFC ERGO or its TPA for cashless treatment.
+City Care Hospital, Mumbai is a registered Network Hospital under this Policy.
+
+2.7 FRAUD
+Any deliberate misrepresentation, concealment of facts, falsification of
+documents, or overbilling by a hospital, provider, or insured person with
+the intent to obtain a benefit not legitimately owed under this Policy.
+
+================================================================================
+SECTION 3 — WAITING PERIOD CLAUSES
+================================================================================
+
+3.1 INITIAL WAITING PERIOD — ALL ILLNESSES
+A waiting period of 30 (thirty) days applies from the Policy Start Date
+for all illnesses except accidental injuries. No claim for hospitalisation
+arising from any illness shall be admissible if the date of admission falls
+within 30 days of the Policy Start Date.
+
+3.2 GENERAL HOSPITALISATION WAITING PERIOD
+*** CLAUSE 3.2 — PRIMARY FRAUD DETECTION TRIGGER FOR CASE 1 ***
+
+A waiting period of 24 (twenty-four) calendar months applies from the
+Policy Start Date for all non-accidental general hospitalisation claims.
+
+This means:
+- The Insured Person must have held an active, continuously renewed policy
+  for a minimum of 24 complete calendar months before a general
+  hospitalisation claim becomes admissible.
+- The waiting period is counted from the original Policy Start Date and
+  is NOT reset upon renewal, provided the policy is renewed without a break.
+- If the policy lapses and is re-issued, the waiting period restarts from
+  the new Policy Start Date.
+
+Conditions covered under general hospitalisation waiting period include but
+are not limited to: fever of unknown origin, acute febrile illness, viral
+infections, general observation admissions, and non-specific medical
+conditions not listed under critical illness or accident categories.
+
+EXAMPLE FOR CLARITY:
+If a policy is issued on 25 January 2025, the general hospitalisation
+waiting period expires on 24 January 2027. Any general hospitalisation
+claim submitted between 25 January 2025 and 24 January 2027 shall be
+automatically rejected under this clause.
+
+3.3 SPECIFIC DISEASE WAITING PERIOD
+A waiting period of 24 (twenty-four) calendar months applies for the
+following listed conditions:
+- Cataract
+- Hernia (all types)
+- Joint replacement surgery
+- Sinusitis and related disorders
+- Tonsillitis and adenoids
+- Varicose veins
+- Calculi (kidney, bile duct, urinary)
+- Piles, fissures, fistula
+
+3.4 PRE-EXISTING DISEASE (PED) WAITING PERIOD
+A waiting period of 36 (thirty-six) calendar months applies for any
+Pre-Existing Disease declared or discovered at the time of policy purchase.
+After the completion of 36 months of continuous coverage, Pre-Existing
+Diseases shall be covered subject to all other policy terms.
+
+3.5 WAITING PERIOD — CRITICAL ILLNESS EXCEPTION
+The waiting period clauses under 3.1, 3.2, and 3.3 DO NOT apply to:
+- Accidental injuries requiring emergency hospitalisation
+- Heart attack (Myocardial Infarction)
+- Stroke
+- Cancer (first diagnosis)
+- Road traffic accidents
+
+Note: Dengue Fever is NOT classified as a critical illness under this
+Policy and is subject to the applicable waiting period clauses unless
+the Insured Person has completed the required waiting period.
+
+================================================================================
+SECTION 4 — DENGUE FEVER COVERAGE
+================================================================================
+
+4.1 DENGUE COVERAGE — GENERAL TERMS
+Dengue Fever (ICD-10: A97) is covered under this Policy subject to:
+(a) The Insured Person having completed the applicable waiting period
+    under Clause 3.2 (24 months general hospitalisation waiting period)
+(b) Positive diagnostic confirmation via NS1 Antigen test or
+    IgM/IgG serology test from an NAABL or NABL accredited laboratory
+(c) Hospitalisation being medically necessary as determined by a
+    registered medical practitioner
+(d) All treatment administered being consistent with recognised clinical
+    protocols for dengue management
+
+4.2 COVERED EXPENSES — DENGUE
+The following expenses are covered for a confirmed dengue hospitalisation:
+- Room rent (as per plan sub-limits)
+- ICU charges if required
+- Consultation and specialist fees
+- Diagnostic tests: CBC, NS1, dengue serology, liver function tests
+- IV fluids and electrolyte management
+- Medications as prescribed by treating physician
+- Platelet-supportive therapy as per clinical protocol
+- Nursing and attendant charges as per hospital policy
+
+4.3 SUB-LIMITS — DENGUE HOSPITALISATION
+Room Rent                  : Up to INR 3,000 per day (General Ward)
+ICU Charges                : Up to INR 7,500 per day
+Diagnostic Tests           : Covered up to actuals within Sum Insured
+Doctor Consultation        : Up to INR 750 per visit, max 2 visits per day
+
+================================================================================
+SECTION 5 — CLINICAL PROTOCOL AND MEDICATION FREQUENCY GUIDELINES
+================================================================================
+
+5.1 POLICY ON MEDICALLY NECESSARY DOSAGE
+*** CLAUSE 5.1 — PRIMARY FRAUD DETECTION TRIGGER FOR CASE 2 ***
+
+This Policy covers only those medications and injectable treatments that
+are administered in accordance with:
+(a) The prescribing physician's documented instructions
+(b) Recognised clinical treatment protocols published by the Indian
+    Council of Medical Research (ICMR), World Health Organization (WHO),
+    or equivalent recognised medical authority
+(c) The manufacturer's approved prescribing information
+
+Any medication or injectable billed in excess of the clinically approved
+frequency, dosage, or duration shall be treated as non-medically necessary
+and will not be covered under this Policy.
+
+5.2 INJECTABLE MEDICATIONS — DENGUE MANAGEMENT PROTOCOL
+*** CLAUSE 5.2 — SPECIFIC FRAUD DETECTION TRIGGER FOR CASE 2 ***
+
+As per the ICMR National Guidelines for Clinical Management of Dengue
+(2023 Edition) and the WHO Dengue Treatment Protocol (Revised 2022),
+the following restrictions apply to platelet-supportive injectable
+therapy used in dengue management:
+
+PLATELET-SUPPORTIVE / HAEMOSTATIC INJECTABLE AGENTS
+(including but not limited to: PlateMax IV, ThromboCare Injection,
+PlateletBoost IV, and equivalent proprietary formulations):
+
+Maximum Frequency         : 2 (two) administrations per 24-hour period
+Minimum Gap Between Doses : 6 (six) hours between administrations
+Maximum Duration          : As prescribed, not to exceed 5 consecutive days
+Standard Dose Per Admin   : 1 vial (as per manufacturer specification)
+
+BILLING COMPLIANCE REQUIREMENT:
+Any hospital billing for platelet-supportive injectable agents must
+match the frequency documented in the patient's prescription and nursing
+administration record. Billing for more than 2 administrations of any
+platelet-supportive injectable within any single 24-hour period will be
+treated as:
+(a) A billing discrepancy requiring mandatory clarification, AND
+(b) A potential Fraud indicator under Section 9 of this Policy
+
+The Insurance Company reserves the right to reject the portion of the
+claim attributable to any administration beyond the clinically approved
+frequency and to refer the matter to its Fraud Investigation Unit.
+
+5.3 ANTIBIOTIC AND ANTIVIRAL PROTOCOL
+Antibiotics and antiviral agents must be billed only for the duration
+prescribed. Billing beyond the prescription period without a documented
+extension note from the treating physician will not be covered.
+
+5.4 CONSUMABLES AND DISPOSABLES
+Consumable charges must be itemised individually in the hospital bill.
+Lump-sum consumable charges exceeding INR 500 per day will require
+supporting documentation from the hospital.
+
+================================================================================
+SECTION 6 — CASHLESS CLAIM PROCEDURE
+================================================================================
+
+6.1 PRE-AUTHORISATION REQUEST
+For planned hospitalisation, the Insured Person or Hospital must submit
+a Pre-Authorisation Request Form to the TPA/Insurance Company at least
+72 hours prior to admission.
+
+For emergency hospitalisation, Pre-Auth must be submitted within
+24 hours of admission.
+
+6.2 DOCUMENTS REQUIRED FOR PRE-AUTH
+(a) Duly completed Pre-Authorisation Request Form (hospital letterhead)
+(b) Copy of Insurance Policy / E-card
+(c) Government photo ID of Insured Person
+(d) Treating doctor's certificate with diagnosis and proposed treatment
+(e) Relevant diagnostic reports if available
+
+6.3 PRE-AUTH EVALUATION PROCESS
+Upon receipt of the Pre-Auth Form, the Insurance Company shall:
+Step 1: Verify policy status and active coverage
+Step 2: Check applicable waiting periods under Section 3
+Step 3: Validate the diagnosis against covered conditions
+Step 4: Approve, query, or reject within 2 hours (emergency) or
+        6 hours (planned) of receiving complete documents
+
+6.4 AUTOMATIC PRE-AUTH REJECTION — WAITING PERIOD
+If the Pre-Auth evaluation under Step 2 confirms that the proposed
+admission falls within an applicable waiting period, the Pre-Auth shall
+be automatically rejected without proceeding to clinical review.
+
+A rejection letter citing the specific waiting period clause shall be
+issued to the hospital and the Insured Person within 2 hours.
+
+No further review is required for waiting-period-based rejections.
+
+================================================================================
+SECTION 7 — REIMBURSEMENT CLAIM PROCEDURE
+================================================================================
+
+7.1 TIMELINE
+Reimbursement claims must be submitted within 30 days of discharge.
+
+7.2 DOCUMENTS REQUIRED FOR REIMBURSEMENT
+(a) Duly filled Claim Form (signed by Insured and Treating Doctor)
+(b) Original hospital discharge summary
+(c) Original itemised hospital bill and payment receipts
+(d) All original diagnostic reports and investigation results
+(e) Prescription copies for all medications billed
+(f) Pharmacy bills (if medications purchased outside hospital)
+(g) Pre-Auth approval letter (for cashless converted to reimbursement)
+
+7.3 CLAIM PROCESSING TIMELINE
+Acknowledgement               : Within 24 hours of submission
+Initial Review                : Within 7 working days
+Additional Document Request   : Within 7 working days if required
+Final Decision                : Within 30 days of complete documentation
+
+================================================================================
+SECTION 8 — EXCLUSIONS
+================================================================================
+
+8.1 PERMANENT EXCLUSIONS (NOT COVERED UNDER ANY CIRCUMSTANCES)
+(a) Cosmetic or aesthetic treatment
+(b) Self-inflicted injuries
+(c) Treatment arising from war, nuclear, or radioactive events
+(d) Experimental treatments not approved by ICMR/WHO
+(e) Treatment for alcohol or substance abuse
+
+8.2 WAITING PERIOD EXCLUSIONS
+Any illness or condition for which the applicable waiting period under
+Section 3 has not been completed at the time of admission.
+
+Specifically: Any claim where the date of admission is within 24 months
+of the original Policy Start Date for general hospitalisation shall be
+rejected under Clause 3.2 regardless of the nature of illness.
+
+8.3 EXCESS BILLING EXCLUSION
+Any portion of a hospital bill that exceeds the clinically approved
+dosage or frequency of treatment as defined under Section 5 shall be
+excluded from coverage.
+
+The Insurance Company shall pay the portion of the claim that is
+clinically compliant and reject the excess portion with documented reasons.
+
+8.4 FRAUD-RELATED EXCLUSION
+If an investigation under Section 9 confirms fraudulent billing, the
+entire claim associated with the fraudulent transaction may be rejected
+and the policy may be cancelled without refund of premium.
+
+================================================================================
+SECTION 9 — FRAUD DETECTION AND INVESTIGATION
+================================================================================
+
+9.1 FRAUD INDICATORS
+The following shall be treated as automatic fraud indicators requiring
+mandatory investigation:
+
+(a) BILLING FREQUENCY ANOMALY
+    Any injectable or medication billed at a frequency exceeding the
+    clinically approved protocol defined in Section 5.
+
+(b) DUPLICATE PROCEDURE BILLING
+    Same procedure billed more than once on the same date without
+    documented medical justification.
+
+(c) PRESCRIPTION-BILLING MISMATCH
+    Medications or injectables billed that are not listed in the
+    treating doctor's prescription.
+
+(d) COST ANOMALY
+    Any line item billed at more than 200% of the prevailing market
+    rate or CGHS/ESI rate for that item or procedure.
+
+(e) IMPOSSIBLE CLINICAL COMBINATION
+    Procedures or diagnoses billed together that are clinically
+    contradictory or impossible (e.g., same patient undergoing
+    contradictory surgical procedures on the same date).
+
+9.2 INVESTIGATION PROCESS
+Upon detection of one or more fraud indicators:
+Step 1: Claim flagged and moved to Fraud Review Queue
+Step 2: Hospital or provider notified within 24 hours
+Step 3: Hospital must submit original nursing records, doctor's notes,
+        and pharmacy dispensing records within 5 working days
+Step 4: Insurance Company Fraud Unit reviews submitted evidence
+Step 5: Decision issued within 15 working days
+
+9.3 PARTIAL CLAIM SETTLEMENT — FRAUD DETECTED
+If fraud is confirmed in one line item of the bill but the rest of the
+claim is valid, the Insurance Company may:
+(a) Approve the valid portion of the claim
+(b) Reject the fraudulent line item with documented reasoning
+(c) Blacklist the hospital from the network if fraud is repeated
+
+9.4 FULL CLAIM REJECTION — FRAUD CONFIRMED
+If the fraudulent billing materially alters the nature of the entire
+claim, the Insurance Company reserves the right to reject the full claim
+and refer the matter to IRDAI and relevant authorities.
+
+================================================================================
+SECTION 10 — GRIEVANCE REDRESSAL
+================================================================================
+
+10.1 INTERNAL GRIEVANCE
+The Insured Person may raise a grievance within 30 days of receiving
+a rejection or partial settlement:
+Email: grievances@hdfcergo.com
+Toll-Free: 1800-2700-700
+
+10.2 INSURANCE OMBUDSMAN
+If the grievance is not resolved within 15 days, the Insured Person may
+approach the Insurance Ombudsman in their jurisdiction as notified by IRDAI.
+
+10.3 APPEAL PROCESS — CLAIM REJECTION
+Any rejected claim may be appealed within 30 days of the rejection letter
+by submitting additional supporting documentation. The Insurance Company
+shall review the appeal within 15 working days.
+
+================================================================================
+SECTION 11 — IMPORTANT POLICY CONDITIONS
+================================================================================
+
+11.1 UTMOST GOOD FAITH
+This Policy is issued on the basis of utmost good faith. Any
+misrepresentation, fraud, or suppression of material facts by the
+Insured Person or hospital shall render this Policy void.
+
+11.2 SUBROGATION
+In cases of confirmed hospital fraud, HDFC ERGO reserves all rights of
+subrogation and recovery against the fraudulent party.
+
+11.3 GOVERNING LAW
+This Policy is governed by the laws of India. Any disputes shall be
+subject to the jurisdiction of courts in Mumbai, Maharashtra.
+
+11.4 POLICY RENEWAL
+This Policy is renewable annually. Renewal must be done before the
+expiry date to maintain continuity of waiting periods. A grace period
+of 30 days is allowed for renewal without loss of waiting period credit.
+
+================================================================================
+ANNEXURE A — QUICK REFERENCE: WAITING PERIOD SUMMARY TABLE
+================================================================================
+
+Condition Type                          | Waiting Period
+----------------------------------------|----------------
+All illnesses (initial)                 | 30 days
+General hospitalisation (non-accident)  | 24 months    ← Case 1 trigger
+Listed specific diseases                | 24 months
+Pre-existing diseases (declared)        | 36 months
+Accidental injuries                     | NIL (covered from Day 1)
+Critical illness (heart, stroke, cancer)| NIL (covered from Day 1)
+Dengue fever                            | 24 months (general hospitalisation)
+
+================================================================================
+ANNEXURE B — QUICK REFERENCE: CLINICAL PROTOCOL LIMITS
+================================================================================
+
+Injectable/Treatment                    | Max Frequency      | Max Duration
+----------------------------------------|--------------------|-------------
+PlateMax IV (Platelet-supportive)       | 2x per 24 hours    | 5 days
+ThromboCare Injection                   | 2x per 24 hours    | 5 days      ← Case 2 trigger
+PlateletBoost IV                        | 2x per 24 hours    | 5 days
+IV Antibiotics (standard)              | As prescribed      | As prescribed
+Blood / Platelet Transfusion           | As clinically req. | As clinically req.
+
+================================================================================
+ANNEXURE C — CONTACT AND TPA INFORMATION
+================================================================================
+
+Third Party Administrator (TPA)        : Medi Assist India TPA Pvt. Ltd.
+TPA Registration No.                   : IRDAI/TPA/2001/004
+Pre-Auth Helpline (24x7)              : 1800-425-9449
+Pre-Auth Email                         : preauth@mediassist.in
+Claims Submission Address             : HDFC ERGO Claims Hub,
+                                         Survey No. 64, Viman Nagar,
+                                         Pune — 411 014
+
+Network Hospital Helpline             : 1800-2700-700
+Website                               : www.hdfcergo.com
+
+================================================================================
+END OF POLICY DOCUMENT
+HDFC ERGO GENERAL INSURANCE COMPANY LIMITED
+CIN: U66030MH2007PLC177117
+IRDAI Reg. No.: 146
+================================================================================

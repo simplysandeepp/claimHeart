@@ -1,0 +1,35 @@
+{
+    "raw_text": "nupa\nmituila\nPatient Medical Bill\nEnjus\nHc\npaletran @\nACDRATELL\n7444rd\nAcoon Bnlafcc\n1aeo?\nAco mNutooi\nPaecrk Aodrd;\nAUNSDJI STRALUOLIKU Lago\nVici ug\nTrrt. Hitot;\n2010372021\n34m FJr\nBILLED AMOUNT\nAKOUNT PAD\nOUTSTANDINC\nsERMCE ITEM\nRALANCE\n4500\nCEEauamu\nPHARMAcYDRUGS\nISs ON BED SPACE\n55,010)\n0,00\n55 @odo\nzco,00\n78 700,0C\nLABORATORY TEST\nZ0d Cojm\n2c] Coo\nPROCEDURETTHFATRE FEE\n17,500.00\n\"oamt\n10 Coo,oD\nFOTCTHFRAPY\n2 sooCo\n3,50,00\nInmunkzalio\n150o7\n15 670 m\nSpcatallst Consui\nTOTAL\n385,550.00\n200,000.0Q\nPatieni Siynature\nAunonzed\nBilling Otficcr\nFEEDINC\n1650_00",
+    "structured_data": {
+        "hospital_name": "Patient Medical Bill",
+        "patient_name": null,
+        "medications_and_services": [
+            {
+                "item": "ISs ON BED SPACE",
+                "type": "Hospital Stay",
+                "billed_amount": 55010.0,
+                "amount_paid": 55.0,
+                "outstanding": 55010.0
+            },
+            {
+                "item": "PROCEDURETTHFATRE FEE",
+                "type": "Surgery/Theatre",
+                "billed_amount": 17500.0,
+                "amount_paid": 0.0,
+                "outstanding": 17500.0
+            },
+            {
+                "item": "FOTCTHFRAPY",
+                "type": "Therapy",
+                "billed_amount": 35000.0,
+                "amount_paid": 15007.0,
+                "outstanding": 35000.0
+            }
+        ],
+        "total_amount": {
+            "total_billed": 385550.0,
+            "total_paid": 200000.0,
+            "outstanding_balance": 185550.0
+        }
+    }
+}

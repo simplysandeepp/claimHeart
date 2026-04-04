@@ -1,0 +1,22 @@
+CITY CARE HOSPITAL
+Outpatient Prescription
+Date: 05 April 2026
+
+Patient Name: Arjun Mehta
+Age: 32 years | Male
+OPD No.: CCH-OPD-2026-09341
+
+Diagnosis: Dengue Fever with Thrombocytopenia (ICD-10: A97.1)
+
+Rx:
+1. Tab Paracetamol 650mg — TDS x 5 days
+2. Syp Electral — 200ml twice daily
+3. Inj. PlateMax IV (Standard Dengue Protocol Injection)
+   Dose: 1 vial per administration
+   Frequency: As per dengue protocol (refer billing)
+4. Tab Pantoprazole 40mg — OD before food x 5 days
+5. Complete rest, high fluid intake
+
+Follow-up: 3 days
+Dr. Rakesh Iyer | MBBS, MD (Internal Medicine)
+Reg No.: MCI-2011-44892

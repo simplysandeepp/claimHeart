@@ -1,0 +1,21 @@
+HOSPITAL PRE-AUTHORISATION REQUEST FORM
+Hospital Name: City Care Hospital, Mumbai
+Hospital Registration No.: MH-2019-HC-00472
+Date of Request: 01 April 2026
+
+--- PATIENT DETAILS ---
+Patient Name: Riya Sharma
+Date of Birth: 14 March 1995
+Policy Number: HDFC-ERGO-2025-784512
+Policy Start Date: 25 January 2025
+Insurance Company: HDFC ERGO General Insurance
+
+--- ADMISSION DETAILS ---
+Proposed Date of Admission: 02 April 2026
+Diagnosis: Acute Febrile Illness (ICD-10: R50.9)
+Proposed Treatment: IV Fluids, Antipyretics, 2-day observation
+Estimated Cost: INR 28,000
+Ward Type: General
+
+Attending Doctor: Dr. Priya Menon (Reg No. MCI-2014-88721)
+Signature: [signed]
