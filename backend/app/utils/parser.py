@@ -108,13 +108,6 @@ def extract_dates(text: str) -> Dict[str, Optional[str]]:
         "prescription_date": None
     }
     
-    # Look for "05 April 2026" or "April 05 2026" patterns
-    date_patterns = [
-        r'(\d{1,2})\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})',
-        r'(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),?\s+(\d{4})',
-        r'(\d{1,2}[/-]\d{1,2}[/-]\d{2,4})',
-    ]
-    
     # Admission date patterns
     admission_patterns = [
         r'(?:date\s*of\s*)?admission\s*[:\-]?\s*([A-Za-z]+\s+\d+,?\s*\d{4})',
@@ -141,35 +134,41 @@ def extract_dates(text: str) -> Dict[str, Optional[str]]:
             dates["discharge_date"] = match.group(1).strip()
             break
     
-    # Bill/Prescription date - look for "Date: 05" followed by "April" and "2026"
-    # Handle OCR splitting date across lines
-    date_match = re.search(r'Date\s*[:\-]?\s*(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})', text, re.IGNORECASE | re.DOTALL)
-    if not date_match:
-        # Try finding "05" near "Date:" then "April" and "2026" nearby
-        date_num = re.search(r'Date\s*[:\-]?\s*(\d{1,2})', text, re.IGNORECASE)
-        if date_num:
-            # Look for month and year within next 100 characters
-            context = text[date_num.start():date_num.start()+200]
-            month_year = re.search(r'(April|May|June|July|August|September|October|November|December|January|February|March)\s+.*?(\d{4})', context, re.IGNORECASE | re.DOTALL)
-            if month_year:
-                dates["prescription_date"] = f"{date_num.group(1)} {month_year.group(1)} {month_year.group(2)}"
-    else:
-        dates["prescription_date"] = f"{date_match.group(1)} {date_match.group(2)} {date_match.group(3)}"
+    # Prescription/Bill date - handle OCR splitting across lines
+    # Pattern 1: Look for "Date" followed by day number, then month and year within 200 chars
+    date_match = re.search(r'Date[:\s]*(\d{1,2})', text, re.IGNORECASE)
+    if date_match:
+        day = date_match.group(1)
+        # Look for month and year after the day
+        context_start = date_match.end()
+        context = text[context_start:context_start + 300]
+        
+        # Find year and month (they might be in any order due to OCR)
+        year_match = re.search(r'(20\d{2})', context)
+        month_match = re.search(r'(January|February|March|April|May|June|July|August|September|October|November|December)', context, re.IGNORECASE)
+        
+        if year_match and month_match:
+            dates["prescription_date"] = f"{day} {month_match.group(1)} {year_match.group(1)}"
     
-    # If still no prescription date, look for any date pattern
+    # Pattern 2: Look for standalone date patterns
     if not dates["prescription_date"]:
-        for pattern in date_patterns:
+        standalone_patterns = [
+            r'(\d{1,2})\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+(20\d{2})',
+            r'(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),?\s+(20\d{2})',
+            r'(\d{1,2})[/-](\d{1,2})[/-](20\d{2})',
+        ]
+        
+        for pattern in standalone_patterns:
             match = re.search(pattern, text, re.IGNORECASE)
             if match:
-                if len(match.groups()) == 3:
-                    if match.group(1).isdigit():
+                groups = match.groups()
+                if len(groups) == 3:
+                    if groups[0].isdigit() and int(groups[0]) <= 31:
                         # Format: day month year
-                        dates["prescription_date"] = f"{match.group(1)} {match.group(2)} {match.group(3)}"
+                        dates["prescription_date"] = f"{groups[0]} {groups[1]} {groups[2]}"
                     else:
                         # Format: month day year
-                        dates["prescription_date"] = f"{match.group(2)} {match.group(1)} {match.group(3)}"
-                else:
-                    dates["prescription_date"] = match.group(1).strip()
+                        dates["prescription_date"] = f"{groups[1]} {groups[0]} {groups[2]}"
                 break
     
     return dates

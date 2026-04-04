@@ -14,7 +14,7 @@
       "admission_date": null,
       "discharge_date": null,
       "bill_date": null,
-      "prescription_date": null
+      "prescription_date": "05 April 2026"
     },
     "diagnosis": [
       "Dengue"
