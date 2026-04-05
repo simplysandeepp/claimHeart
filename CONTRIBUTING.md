@@ -1,103 +1,53 @@
-# Contributing to ClaimHeart
+# ClaimHeart Internal Contribution Guide
 
-Thank you for your interest in contributing to ClaimHeart! 🎉
+This document describes how authorized team members and approved
+collaborators should contribute to ClaimHeart.
 
-This document provides guidelines for contributing to the project.
+ClaimHeart is a private group project. It is not an open-source repository,
+and contribution access is managed internally by the ClaimHeart Project Team.
 
-## 📋 Table of Contents
+## Who Can Contribute
 
-- [Code of Conduct](#code-of-conduct)
-- [How Can I Contribute?](#how-can-i-contribute)
-- [Development Setup](#development-setup)
-- [Pull Request Process](#pull-request-process)
-- [Coding Standards](#coding-standards)
-- [License](#license)
+The following people may contribute:
 
-## 🤝 Code of Conduct
+- Core members of the ClaimHeart Project Team
+- Approved collaborators invited by the Project Team
+- Reviewers or maintainers authorized to work on specific areas
 
-By participating in this project, you agree to maintain a respectful and inclusive environment for all contributors.
+## Contribution Workflow
 
-## 🚀 How Can I Contribute?
+1. Confirm the scope of the task with the relevant project lead.
+2. Create a working branch using the team naming convention.
+3. Make focused changes with clear commit messages.
+4. Update documentation or tests when your change affects behavior.
+5. Submit your branch for internal review.
+6. Address feedback before the change is merged.
 
-### Reporting Bugs
+## Development Expectations
 
-Before creating bug reports, please check existing issues. When creating a bug report, include:
+- Keep changes limited to the approved scope.
+- Follow the existing project structure and coding style.
+- Avoid committing secrets, credentials, or sensitive data.
+- Validate your changes locally whenever possible.
+- Document any operational, security, or compliance impact.
 
-- Clear and descriptive title
-- Steps to reproduce the issue
-- Expected vs actual behavior
-- Screenshots (if applicable)
-- Environment details (OS, browser, versions)
+## Reviews
 
-### Suggesting Enhancements
+Internal review should check for:
 
-Enhancement suggestions are tracked as GitHub issues. Include:
+- Functional correctness
+- Security and privacy impact
+- Compliance considerations
+- Test coverage or manual validation
+- Documentation updates where needed
 
-- Clear description of the enhancement
-- Use case and benefits
-- Possible implementation approach
+## Ownership of Contributions
 
-### Pull Requests
+By contributing to ClaimHeart, you confirm that:
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+- You are authorized to submit the contribution
+- The contribution does not knowingly violate third-party rights
+- The ClaimHeart Project Team may use, modify, and maintain the contribution
+  as part of the project
 
-## 💻 Development Setup
-
-### Prerequisites
-
-- Node.js 18+ and npm
-- Python 3.11+
-- Git
-
-### Frontend Setup
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-### Backend Setup
-
-```bash
-cd backend
-pip install -r requirements.txt
-uvicorn app.main:app --reload
-```
-
-## 📝 Pull Request Process
-
-1. Update documentation for any new features
-2. Follow the existing code style
-3. Add tests for new functionality
-4. Ensure all tests pass
-5. Update the README.md if needed
-6. Request review from maintainers
-
-## 🎨 Coding Standards
-
-### Frontend (TypeScript/React)
-
-- Use TypeScript for type safety
-- Follow React best practices
-- Use functional components with hooks
-- Keep components small and focused
-
-### Backend (Python)
-
-- Follow PEP 8 style guide
-- Use type hints
-- Write docstrings for functions
-- Keep functions focused and testable
-
-## 📄 License
-
-By contributing, you agree that your contributions will be licensed under the MIT License.
-
-## 🙏 Thank You!
-
-Your contributions make ClaimHeart better for everyone!
+Refer to the `LICENSE` file for the governing project license terms.

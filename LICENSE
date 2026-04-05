@@ -1,239 +1,191 @@
-MIT License
+CLAIMHEART PRIVATE PROJECT LICENSE
 
-Copyright (c) 2026 Sandeep Prajapati and Contributors
-ClaimHeart - Medical Claims Processing System
+Copyright (c) 2026 ClaimHeart Project Team. All rights reserved.
+
+Project: ClaimHeart - Medical Claims Processing System
 Repository: https://github.com/simplysandeepp/claimHeart
+License Type: Proprietary Internal-Use License
+Effective Date: 2026
+Version: 2.0
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+========================================================================
+1. LICENSE STATUS
+========================================================================
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+ClaimHeart is a private group project. This repository and its contents are
+not open source and are not released under the MIT License or any other
+public open-source license.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+All rights not expressly granted in this license are reserved by the
+ClaimHeart Project Team.
 
-================================================================================
-                          DETAILED LICENSE INFORMATION
-================================================================================
+========================================================================
+2. OWNERSHIP
+========================================================================
 
-PROJECT: ClaimHeart - AI-Powered Medical Claims Processing System
-REPOSITORY: https://github.com/simplysandeepp/claimHeart
-LICENSE TYPE: MIT License (Open Source)
-VERSION: 1.0.0
-EFFECTIVE DATE: 2026
+The ClaimHeart Project Team owns all rights, title, and interest in this
+project, including its source code, documentation, configuration, design
+assets, workflows, and related materials, except for third-party components
+that remain subject to their own licenses.
 
-================================================================================
-                              WHAT YOU CAN DO
-================================================================================
+This license applies to all project components, including:
 
-✓ COMMERCIAL USE
-  - Use this software for commercial purposes
-  - Integrate into your business applications
-  - Sell products/services built with this software
-  - Use in production environments for profit
+- Frontend applications and UI assets
+- Backend services, APIs, and processing logic
+- Documentation and internal guides
+- Configuration files, scripts, and deployment assets
+- Data models, schemas, and supporting utilities
 
-✓ MODIFICATION
-  - Modify the source code as needed
-  - Create derivative works
-  - Customize for your specific requirements
-  - Improve and enhance the software
+========================================================================
+3. PERMITTED USE
+========================================================================
 
-✓ DISTRIBUTION
-  - Distribute copies of the software
-  - Share with others freely
-  - Include in other projects
-  - Redistribute modified versions
+Access to and use of this project is limited to:
 
-✓ PRIVATE USE
-  - Use privately for personal projects
-  - Use within your organization
-  - No obligation to share your modifications
-  - Keep your implementations private
+- Authorized members of the ClaimHeart Project Team
+- Approved collaborators working with the Project Team
+- Personnel expressly permitted by the Project Team for internal business,
+  development, testing, security review, or deployment purposes
 
-✓ PATENT USE
-  - Use any patents that may be associated with this software
-  - No patent litigation restrictions
+Authorized users may:
 
-================================================================================
-                            WHAT YOU MUST DO
-================================================================================
+- View and use the software for approved internal project work
+- Modify the codebase for project-related development and maintenance
+- Create internal builds and deployments approved by the Project Team
+- Share project materials only with other authorized users who have a
+  legitimate need to access them
 
-✓ INCLUDE LICENSE
-  - Include a copy of this MIT License in all copies
-  - Include the copyright notice in all copies
-  - Maintain attribution to original authors
+========================================================================
+4. RESTRICTIONS
+========================================================================
 
-✓ INCLUDE COPYRIGHT NOTICE
-  - Keep the copyright notice intact:
-    "Copyright (c) 2026 Sandeep Prajapati and Contributors"
-  - Include in documentation and about pages
-  - Credit the ClaimHeart project
+Unless the ClaimHeart Project Team gives prior written permission, you may
+not:
 
-================================================================================
-                          WHAT YOU CANNOT DO
-================================================================================
+- Publish, distribute, or sublicense this software
+- Release the codebase or any substantial portion of it as open source
+- Share source code, documentation, credentials, datasets, or internal
+  project materials with unauthorized persons
+- Sell, lease, transfer, or commercially exploit this software outside
+  approved Project Team activities
+- Remove copyright, confidentiality, or ownership notices
+- Use the ClaimHeart name, branding, or trademarks in a way that implies
+  separate ownership or unauthorized endorsement
 
-✗ HOLD LIABLE
-  - Cannot hold authors liable for damages
-  - No warranty is provided
-  - Use at your own risk
+========================================================================
+5. CONFIDENTIALITY
+========================================================================
 
-✗ USE TRADEMARK
-  - Cannot use "ClaimHeart" trademark without permission
-  - Cannot imply endorsement by original authors
-  - Must distinguish your version if modified
+This repository may contain confidential, proprietary, operational, or
+sensitive information. Authorized users must protect that information and
+must not disclose it outside approved project channels.
 
-================================================================================
-                            PROJECT COMPONENTS
-================================================================================
+Users are responsible for handling all medical, claims, operational, and
+security-related information in accordance with applicable internal policies,
+contracts, and legal requirements.
 
-This license applies to all components of the ClaimHeart project:
+========================================================================
+6. CONTRIBUTIONS
+========================================================================
 
-FRONTEND (Next.js Application)
-  - React components and pages
-  - TypeScript code and types
-  - UI/UX designs and layouts
-  - State management (Zustand)
-  - Styling and themes
+All contributions made to this project by team members or approved
+collaborators are intended for use within the ClaimHeart project and are
+treated as contributions to a group-owned project.
 
-BACKEND (FastAPI Application)
-  - Python API endpoints
-  - OCR processing engine (EasyOCR integration)
-  - Medical data parser
-  - Database models and schemas
-  - Authentication and security
+By submitting code, documentation, designs, or other project materials, a
+contributor represents that they have the right to submit the work and grants
+the ClaimHeart Project Team the right to use, modify, integrate, and maintain
+that contribution as part of the project.
 
-DOCUMENTATION
-  - README files
-  - API documentation
-  - Setup guides
-  - Code comments
+Contribution access and review are managed internally by the Project Team.
 
-CONFIGURATION FILES
-  - Docker configurations
-  - Environment templates
-  - Build scripts
+========================================================================
+7. THIRD-PARTY SOFTWARE
+========================================================================
 
-================================================================================
-                          THIRD-PARTY LICENSES
-================================================================================
+This project may include or depend on third-party libraries, frameworks, and
+tools. Those components remain subject to their respective licenses.
 
-This project uses the following third-party libraries, each with their own
-licenses. Please review their respective licenses:
+Examples of third-party dependencies used in this project may include:
 
-FRONTEND DEPENDENCIES:
-  - Next.js (MIT License)
-  - React (MIT License)
-  - TypeScript (Apache License 2.0)
-  - Zustand (MIT License)
-  - Tailwind CSS (MIT License)
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- FastAPI
+- SQLAlchemy
+- Pydantic
+- Redis
+- Celery
 
-BACKEND DEPENDENCIES:
-  - FastAPI (MIT License)
-  - EasyOCR (Apache License 2.0)
-  - Pytesseract (Apache License 2.0)
-  - SQLAlchemy (MIT License)
-  - Pydantic (MIT License)
-  - Celery (BSD License)
-  - Redis (BSD License)
+Use of third-party software must comply with the applicable third-party
+license terms.
 
-All third-party dependencies retain their original licenses and copyrights.
+========================================================================
+8. MEDICAL AND COMPLIANCE DISCLAIMER
+========================================================================
 
-================================================================================
-                              DISCLAIMER
-================================================================================
-
-MEDICAL DISCLAIMER:
-This software is designed for medical claims processing and document analysis.
-It is NOT intended to:
-  - Provide medical advice
-  - Replace professional medical judgment
-  - Be used as a sole diagnostic tool
-  - Make clinical decisions without human oversight
+ClaimHeart is intended to support medical claims processing and related
+administrative workflows. It is not intended to provide medical advice, make
+independent clinical decisions, or replace professional review.
 
 Users are responsible for:
-  - Ensuring compliance with healthcare regulations (HIPAA, GDPR, etc.)
-  - Validating all extracted medical data
-  - Maintaining patient privacy and data security
-  - Following local laws and regulations
 
-NO WARRANTY:
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+- Validating system outputs before operational or clinical reliance
+- Protecting patient and business data
+- Ensuring compliance with applicable laws, regulations, and contractual
+  obligations, including privacy and healthcare requirements where relevant
 
-LIMITATION OF LIABILITY:
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-USE OR OTHER DEALINGS IN THE SOFTWARE.
+========================================================================
+9. NO WARRANTY
+========================================================================
 
-================================================================================
-                            CONTRIBUTION POLICY
-================================================================================
+THIS SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE," WITHOUT WARRANTY OF ANY
+KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT,
+AVAILABILITY, ACCURACY, OR SECURITY.
 
-Contributions to this project are welcome and appreciated!
+========================================================================
+10. LIMITATION OF LIABILITY
+========================================================================
 
-By contributing to ClaimHeart, you agree that:
-  - Your contributions will be licensed under the MIT License
-  - You have the right to submit the contribution
-  - You grant the project maintainers the right to use your contribution
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE CLAIMHEART PROJECT TEAM SHALL NOT
+BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES, OR FOR ANY LOSS OF DATA, BUSINESS, REVENUE, PROFITS,
+OR GOODWILL, ARISING FROM OR RELATED TO THE USE OF THIS SOFTWARE OR INABILITY
+TO USE THIS SOFTWARE.
 
-To contribute:
-  1. Fork the repository
-  2. Create a feature branch
-  3. Make your changes
-  4. Submit a pull request
-  5. Ensure all tests pass
+========================================================================
+11. TERMINATION
+========================================================================
 
-See CONTRIBUTING.md for detailed contribution guidelines.
+Any permission granted under this license terminates automatically if you
+breach its terms or access the project without authorization.
 
-================================================================================
-                              CONTACT
-================================================================================
+Upon termination, you must stop using the project and, if requested by the
+ClaimHeart Project Team, return or delete any copies of project materials in
+your possession or control, except where retention is required by law or
+contract.
 
-Project Maintainer: Sandeep Prajapati
+========================================================================
+12. CONTACT
+========================================================================
+
+Project Owner: ClaimHeart Project Team
 Repository: https://github.com/simplysandeepp/claimHeart
-Issues: https://github.com/simplysandeepp/claimHeart/issues
-Discussions: https://github.com/simplysandeepp/claimHeart/discussions
 
-For questions about licensing, please open an issue on GitHub.
+For licensing or access questions, contact the Project Team through the
+official repository administrators or designated project leads.
 
-================================================================================
-                            VERSION HISTORY
-================================================================================
+========================================================================
+13. VERSION HISTORY
+========================================================================
 
-Version 1.0.0 (2026)
-  - Initial release
-  - MIT License applied
-  - Full project open-sourced
+Version 2.0 (2026)
+- Replaced the prior MIT-style text
+- Updated ownership to reflect a group project
+- Clarified that the repository is private and proprietary
 
-================================================================================
-                          ACKNOWLEDGMENTS
-================================================================================
+========================================================================
 
-This project builds upon the work of many open-source contributors and
-projects. We are grateful to:
-
-  - The Next.js team for the amazing React framework
-  - The FastAPI team for the modern Python web framework
-  - The EasyOCR team for the OCR capabilities
-  - All open-source contributors who make projects like this possible
-
-================================================================================
-
-For the complete and legally binding license text, refer to the standard
-MIT License terms at the beginning of this file.
-
-Last Updated: 2026
-License Version: 1.0.0
+This document is the governing license notice for the ClaimHeart project.
