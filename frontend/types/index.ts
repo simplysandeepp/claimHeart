@@ -1,4 +1,4 @@
-﻿export type ClaimStatus = "pending" | "approved" | "denied" | "under_review";
+export type ClaimStatus = "pending" | "approved" | "denied" | "under_review";
 export type AgentStatus = "pass" | "flag" | "pending";
 export type NotifTarget = "patient" | "hospital" | "insurer" | "all";
 export type UserRole = "patient" | "hospital" | "insurer";
@@ -111,6 +111,7 @@ export interface AppUser {
   id: string;
   name: string;
   email: string;
+  phone?: string;
   password: string;
   role: UserRole;
   patientId?: string;
@@ -119,4 +120,11 @@ export interface AppUser {
   insuranceCompany?: string;
   sumInsured?: number;
   doctorName?: string;
+  hospitalRegNo?: string;
+  city?: string;
+  department?: string;
+  employeeId?: string;
+  website?: string;
+  organizationType?: string;
+  organizationCode?: string;
 }
