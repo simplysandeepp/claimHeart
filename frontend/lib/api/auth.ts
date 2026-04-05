@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { readStorage, writeStorage } from "@/lib/api/storage";
 import type { AppUser, UserRole } from "@/types";
@@ -6,6 +6,27 @@ import type { AppUser, UserRole } from "@/types";
 const USERS_KEY = "users";
 const CURRENT_USER_KEY = "claimheart.currentUser";
 const ROLE_KEY = "claimheart.role";
+
+export type SignupPayload = {
+  name: string;
+  email: string;
+  phone?: string;
+  password: string;
+  role: UserRole;
+  patientId?: string;
+  dob?: string;
+  policyNumber?: string;
+  insuranceCompany?: string;
+  sumInsured?: number;
+  doctorName?: string;
+  hospitalRegNo?: string;
+  city?: string;
+  department?: string;
+  employeeId?: string;
+  website?: string;
+  organizationType?: string;
+  organizationCode?: string;
+};
 
 export const getUsers = async (): Promise<AppUser[]> => {
   return readStorage<AppUser[]>(USERS_KEY, []);
@@ -34,7 +55,14 @@ export const setCurrentUser = async (user: AppUser) => {
 
 export const loginUser = async (email: string, password: string, role: UserRole) => {
   const users = await getUsers();
-  const user = users.find((entry) => entry.email === email && entry.password === password && entry.role === role) ?? null;
+  const normalizedEmail = email.trim().toLowerCase();
+  const user =
+    users.find(
+      (entry) =>
+        entry.email.trim().toLowerCase() === normalizedEmail &&
+        entry.password === password &&
+        entry.role === role,
+    ) ?? null;
   if (!user) {
     return null;
   }
@@ -43,15 +71,36 @@ export const loginUser = async (email: string, password: string, role: UserRole)
   return user;
 };
 
-export const signupUser = async (payload: { name: string; email: string; password: string; role: UserRole }) => {
+export const signupUser = async (payload: SignupPayload) => {
   const users = await getUsers();
+  const normalizedEmail = payload.email.trim().toLowerCase();
+  const existingUser = users.find((entry) => entry.email.trim().toLowerCase() === normalizedEmail);
+
+  if (existingUser) {
+    throw new Error("An account with this email already exists in the local demo data.");
+  }
+
+  const generatedPatientId = `P-${Date.now()}`;
   const user: AppUser = {
     id: `${payload.role[0].toUpperCase()}-${Date.now()}`,
-    name: payload.name,
-    email: payload.email,
+    name: payload.name.trim(),
+    email: normalizedEmail,
+    phone: payload.phone?.trim(),
     password: payload.password,
     role: payload.role,
-    patientId: payload.role === "patient" ? `P-${Date.now()}` : undefined,
+    patientId: payload.role === "patient" ? payload.patientId?.trim() || generatedPatientId : undefined,
+    dob: payload.dob,
+    policyNumber: payload.policyNumber?.trim(),
+    insuranceCompany: payload.insuranceCompany?.trim(),
+    sumInsured: payload.sumInsured,
+    doctorName: payload.doctorName?.trim(),
+    hospitalRegNo: payload.hospitalRegNo?.trim(),
+    city: payload.city?.trim(),
+    department: payload.department?.trim(),
+    employeeId: payload.employeeId?.trim(),
+    website: payload.website?.trim(),
+    organizationType: payload.organizationType?.trim(),
+    organizationCode: payload.organizationCode?.trim(),
   };
 
   const updatedUsers = [user, ...users];
