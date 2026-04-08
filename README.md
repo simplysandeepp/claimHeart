@@ -88,7 +88,7 @@ Backend:
 - Tesseract OCR
 - OpenCV
 - PyMuPDF and pdf2image
-- Google Gemini API
+- Google Gemini API | Groq API
 - Celery
 - Redis
 - SQLAlchemy
