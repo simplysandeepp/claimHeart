@@ -1,6 +1,7 @@
 "use client";
 
 import { readStorage, writeStorage } from "@/lib/api/storage";
+import { ApiError, apiRequest, clearAuthTokens, setAuthTokens } from "@/lib/apiClient";
 import type { AppUser, UserRole } from "@/types";
 
 const USERS_KEY = "users";
@@ -26,6 +27,73 @@ export type SignupPayload = {
   website?: string;
   organizationType?: string;
   organizationCode?: string;
+};
+
+type BackendAuthResponse = {
+  user: {
+    id: number;
+    full_name: string;
+    email: string;
+    role: string;
+    is_active: boolean;
+  };
+  tokens: {
+    access_token: string;
+    refresh_token: string;
+    token_type: string;
+  };
+};
+
+const syncBackendSession = async (
+  user: Pick<AppUser, "name" | "email" | "role">,
+  password: string,
+  preferRegister: boolean = false,
+) => {
+  const register = async () =>
+    apiRequest<BackendAuthResponse>(
+      "/auth/register",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          full_name: user.name,
+          email: user.email,
+          password,
+          role: user.role,
+        }),
+      },
+      false,
+    );
+
+  const login = async () =>
+    apiRequest<BackendAuthResponse>(
+      "/auth/login",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email: user.email,
+          password,
+        }),
+      },
+      false,
+    );
+
+  try {
+    const session = preferRegister ? await register().catch(() => login()) : await login().catch(async (error) => {
+      if (error instanceof ApiError && error.status === 401) {
+        return register();
+      }
+      throw error;
+    });
+
+    if (session?.tokens?.access_token) {
+      setAuthTokens({
+        accessToken: session.tokens.access_token,
+        refreshToken: session.tokens.refresh_token,
+      });
+    }
+  } catch {
+    // Keep local demo auth working even when backend auth is unavailable.
+  }
 };
 
 export const getUsers = async (): Promise<AppUser[]> => {
@@ -68,6 +136,7 @@ export const loginUser = async (email: string, password: string, role: UserRole)
   }
 
   await setCurrentUser(user);
+  await syncBackendSession(user, password);
   return user;
 };
 
@@ -106,6 +175,7 @@ export const signupUser = async (payload: SignupPayload) => {
   const updatedUsers = [user, ...users];
   writeStorage(USERS_KEY, updatedUsers);
   await setCurrentUser(user);
+  await syncBackendSession(user, payload.password, true);
   return user;
 };
 
@@ -134,5 +204,6 @@ export const logout = (withConfirmation: boolean = true) => {
   window.localStorage.removeItem("user");
   window.localStorage.removeItem(CURRENT_USER_KEY);
   window.localStorage.removeItem(ROLE_KEY);
+  clearAuthTokens();
   window.location.href = "/login";
 };

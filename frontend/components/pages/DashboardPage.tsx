@@ -74,6 +74,8 @@ export default function DashboardPage() {
   const ready = usePageReady();
   const searchParams = useSearchParams();
   const claims = useAppStore((state) => state.claims);
+  const claimsLoading = useAppStore((state) => state.claimsLoading);
+  const claimsError = useAppStore((state) => state.claimsError);
   const notifications = useAppStore((state) => state.notifications);
   const updateClaim = useAppStore((state) => state.updateClaim);
   const [viewer, setViewer] = useState<AppUser | null>(null);
@@ -278,7 +280,7 @@ export default function DashboardPage() {
     }
   };
 
-  if (!ready || !viewer) {
+  if (!ready || !viewer || (claimsLoading && claims.length === 0)) {
     return (
       <div className="space-y-6">
         <div className="space-y-3"><SkeletonBlock className="h-9 w-56" /><SkeletonBlock className="h-5 w-80" /></div>
@@ -289,6 +291,12 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6 sm:space-y-8">
+      {claimsError ? (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+          {claimsError}
+        </div>
+      ) : null}
+
       <section className="overflow-hidden rounded-[2rem] border border-slate-200 bg-[linear-gradient(135deg,#08101c_0%,#12365f_56%,#eef4fb_56%,#f8fafc_100%)] shadow-[0_24px_60px_rgba(15,23,42,0.12)]">
         <div className="grid gap-8 px-6 py-7 sm:px-8 lg:grid-cols-[1.15fr_0.85fr] lg:px-10 lg:py-10">
           <div>

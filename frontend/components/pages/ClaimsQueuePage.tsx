@@ -4,8 +4,8 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import MotionCard from "@/components/ui/MotionCard";
 import { SkeletonBlock, SkeletonCard } from "@/components/ui/Skeleton";
+import { useClaims } from "@/hooks/useClaims";
 import usePageReady from "@/hooks/usePageReady";
-import { useAppStore } from "@/store/useAppStore";
 import { isNewClaim } from "@/lib/claimUi";
 import StatusBadge from "@/components/claims/StatusBadge";
 import type { ClaimStatus } from "@/types";
@@ -19,7 +19,7 @@ const filters: { label: string; value: "all" | ClaimStatus }[] = [
 ];
 
 export default function ClaimsQueuePage() {
-  const claims = useAppStore((state) => state.claims);
+  const { claims, loading, error, reload } = useClaims();
   const ready = usePageReady();
   const [activeFilter, setActiveFilter] = useState<"all" | ClaimStatus>("all");
   const [search, setSearch] = useState("");
@@ -32,7 +32,7 @@ export default function ClaimsQueuePage() {
     return matchesFilter && matchesSearch;
   }), [activeFilter, claims, search]);
 
-  if (!ready) {
+  if (!ready || (loading && claims.length === 0)) {
     return (
       <div className="space-y-6">
         <div className="space-y-3"><SkeletonBlock className="h-9 w-56" /><SkeletonBlock className="h-5 w-80" /></div>
@@ -47,6 +47,19 @@ export default function ClaimsQueuePage() {
         <h1 className="text-2xl font-bold tracking-[-0.04em] text-slate-900 sm:text-3xl md:text-[2.1rem]">Claims Queue</h1>
         <p className="mt-2 text-sm text-[var(--ch-muted)] sm:text-base md:text-lg">Live insurer queue. New hospital submissions appear automatically.</p>
       </div>
+
+      {error ? (
+        <div className="flex flex-col gap-3 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-amber-800">{error}</p>
+          <button
+            type="button"
+            onClick={() => void reload()}
+            className="inline-flex h-10 items-center justify-center rounded-xl border border-amber-300 bg-white px-3 text-sm font-semibold text-amber-800 transition-all hover:bg-amber-100"
+          >
+            Retry
+          </button>
+        </div>
+      ) : null}
 
       <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
         <div className="flex flex-wrap gap-2">
@@ -86,6 +99,9 @@ export default function ClaimsQueuePage() {
               </div>
             );
           })}
+          {filteredClaims.length === 0 ? (
+            <div className="px-6 py-10 text-sm text-[var(--ch-muted)]">No claims match the current filter.</div>
+          ) : null}
         </div>
       </div>
 
@@ -108,6 +124,11 @@ export default function ClaimsQueuePage() {
             </div>
           </MotionCard>
         ))}
+        {filteredClaims.length === 0 ? (
+          <MotionCard className="rounded-[1.5rem] border border-slate-200 bg-white p-4 text-sm text-[var(--ch-muted)] shadow-[0_8px_24px_rgba(15,23,42,0.04)]">
+            No claims match the current filter.
+          </MotionCard>
+        ) : null}
       </div>
     </div>
   );

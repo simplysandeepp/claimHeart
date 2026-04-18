@@ -60,6 +60,8 @@ export interface ClaimEmail {
 
 export interface Claim {
   id: string;
+  backendId?: number;
+  claimNumber?: string;
   patientId: string;
   patientName: string;
   patientEmail?: string;
@@ -89,6 +91,7 @@ export interface Claim {
   attendingDoctor?: string;
   decisionLetter?: string;
   amountApproved?: number;
+  priority?: "low" | "normal" | "high" | "critical";
   workflowState?: "draft" | "ocr_processing" | "ready_for_submission" | "submitted" | "adjudicating" | "completed";
   auditTrail?: WorkflowAuditEntry[];
   pipelineCompletedAt?: string;

@@ -1,15 +1,42 @@
 "use client";
 
 import { useEffect } from "react";
+import { getClaims } from "@/lib/api/claims";
 import { seedIfEmpty } from "@/lib/mockData";
 import { useAppStore } from "@/store/useAppStore";
 
 export function useSyncStore() {
   useEffect(() => {
-    const syncFromStorage = useAppStore.getState().syncFromStorage;
+    const store = useAppStore.getState();
+    const syncFromStorage = store.syncFromStorage;
 
-    seedIfEmpty();
+    seedIfEmpty({ includeDemoClaims: false });
     syncFromStorage();
+
+    let cancelled = false;
+    const syncClaims = async () => {
+      const liveStore = useAppStore.getState();
+      liveStore.setClaimsLoading(true);
+      liveStore.setClaimsError(null);
+
+      try {
+        await getClaims();
+        if (!cancelled) {
+          useAppStore.getState().setClaimsError(null);
+        }
+      } catch (error) {
+        if (!cancelled) {
+          const message = error instanceof Error ? error.message : "Unable to load claims from backend.";
+          useAppStore.getState().setClaimsError(message);
+        }
+      } finally {
+        if (!cancelled) {
+          useAppStore.getState().setClaimsLoading(false);
+        }
+      }
+    };
+
+    void syncClaims();
 
     const handleStorage = (event: StorageEvent) => {
       if (event.key === "claims" || event.key === "notifications") {
@@ -18,6 +45,9 @@ export function useSyncStore() {
     };
 
     window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
+    return () => {
+      cancelled = true;
+      window.removeEventListener("storage", handleStorage);
+    };
   }, []);
 }

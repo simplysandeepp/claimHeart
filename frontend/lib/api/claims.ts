@@ -9,6 +9,7 @@ import {
   notifyDocumentRequested,
   notifyDocumentUploaded,
 } from "@/lib/api/notifications";
+import { ApiError, apiRequest } from "@/lib/apiClient";
 import type { Claim, ClaimEmail, ClaimStatus, Comment, TimelineEntry, UploadedDocument, UserRole } from "@/types";
 
 const buildId = (prefix: string) => `${prefix}-${Date.now()}-${Math.random().toString(16).slice(2, 6)}`;
@@ -29,6 +30,131 @@ const resolvePatientEmail = (claim: Claim) => {
   }
 
   return "patient@claimheart.ai";
+};
+
+type BackendClaim = {
+  id: number;
+  claim_number: string;
+  patient_name: string;
+  policy_number: string;
+  diagnosis: string | null;
+  amount: number;
+  status: string;
+  priority: "low" | "normal" | "high" | "critical";
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+const normalizeClaimStatus = (status: string): ClaimStatus => {
+  const normalized = status.trim().toLowerCase();
+  if (normalized === "pending" || normalized === "under_review" || normalized === "approved" || normalized === "denied") {
+    return normalized;
+  }
+  return "under_review";
+};
+
+const buildBackendClaimNumber = () => {
+  const stamp = Date.now().toString().slice(-8);
+  return `CLM-${stamp}`;
+};
+
+const toBackendClaimPayload = (claimInput: Partial<Claim>, fallbackClaim: Claim) => {
+  const claimNumber = claimInput.claimNumber || claimInput.id || fallbackClaim.claimNumber || fallbackClaim.id || buildBackendClaimNumber();
+  return {
+    claim_number: claimNumber,
+    patient_name: claimInput.patientName || fallbackClaim.patientName || "Unknown Patient",
+    policy_number: claimInput.policyNumber || claimInput.patientId || fallbackClaim.policyNumber || fallbackClaim.patientId || "POL-UNKNOWN",
+    diagnosis: claimInput.diagnosis || fallbackClaim.diagnosis || "Diagnosis pending",
+    amount: Number(claimInput.amount ?? fallbackClaim.amount ?? 0),
+    status: normalizeClaimStatus(claimInput.status || fallbackClaim.status || "pending"),
+    priority: claimInput.priority || fallbackClaim.priority || "normal",
+    notes: claimInput.decisionNote || fallbackClaim.decisionNote || null,
+  };
+};
+
+const mapBackendClaimToUi = (claim: BackendClaim): Claim => {
+  const submittedTime = claim.created_at || new Date().toISOString();
+  const normalizedStatus = normalizeClaimStatus(claim.status);
+
+  return {
+    id: claim.claim_number,
+    backendId: claim.id,
+    claimNumber: claim.claim_number,
+    patientId: claim.policy_number,
+    patientName: claim.patient_name,
+    patientEmail: "",
+    hospital: "Hospital not specified",
+    caseType: "planned",
+    diagnosis: claim.diagnosis || "Diagnosis pending",
+    icdCode: "",
+    amount: Number(claim.amount || 0),
+    status: normalizedStatus,
+    priority: claim.priority,
+    riskScore: 0,
+    submittedAt: submittedTime,
+    documents: [],
+    timeline: [
+      { label: "Claim received by backend", time: submittedTime, actor: "system" },
+      {
+        label:
+          normalizedStatus === "approved"
+            ? "Approved by insurer"
+            : normalizedStatus === "denied"
+              ? "Denied by insurer"
+              : normalizedStatus === "under_review"
+                ? "Claim moved to review"
+                : "Claim pending review",
+        time: claim.updated_at || submittedTime,
+        actor: "insurer",
+      },
+    ],
+    aiResults: {
+      policy: { status: "pending", reason: "Awaiting backend analysis signals" },
+      medical: { status: "pending", reason: "Awaiting backend analysis signals" },
+      cross: { status: "pending", reason: "Awaiting backend analysis signals" },
+    },
+    comments: [],
+    emails: [],
+    decisionNote: claim.notes || undefined,
+  };
+};
+
+const mergeWithExistingClaim = (mapped: Claim, claimInput?: Partial<Claim>): Claim => ({
+  ...mapped,
+  hospital: claimInput?.hospital || mapped.hospital,
+  caseType: claimInput?.caseType || mapped.caseType,
+  patientId: claimInput?.patientId || mapped.patientId,
+  patientEmail: claimInput?.patientEmail || mapped.patientEmail,
+  icdCode: claimInput?.icdCode || mapped.icdCode,
+  riskScore: claimInput?.riskScore ?? mapped.riskScore,
+  documents: claimInput?.documents || mapped.documents,
+  timeline: claimInput?.timeline || mapped.timeline,
+  aiResults: claimInput?.aiResults || mapped.aiResults,
+  comments: claimInput?.comments || mapped.comments,
+  workflowCaseId: claimInput?.workflowCaseId,
+  caseLabel: claimInput?.caseLabel,
+  policyStartDate: claimInput?.policyStartDate,
+  insurerName: claimInput?.insurerName,
+  hospitalRegNo: claimInput?.hospitalRegNo,
+  attendingDoctor: claimInput?.attendingDoctor,
+  amountApproved: claimInput?.amountApproved,
+  workflowState: claimInput?.workflowState,
+  auditTrail: claimInput?.auditTrail,
+  pipelineCompletedAt: claimInput?.pipelineCompletedAt,
+});
+
+const setClaimsLoadingState = (loading: boolean, errorMessage: string | null = null) => {
+  const store = useAppStore.getState();
+  store.setClaimsLoading(loading);
+  if (errorMessage !== null) {
+    store.setClaimsError(errorMessage);
+  }
+};
+
+const listBackendClaims = async (): Promise<Claim[]> => {
+  const claims = await apiRequest<BackendClaim[]>("/claims", { method: "GET" }, true);
+  return claims.map((entry) => mapBackendClaimToUi(entry));
 };
 
 export const buildNewClaim = (data: Partial<Claim>): Claim => {
@@ -123,7 +249,28 @@ export const simulateOCR = () => ({
 });
 
 export const getClaims = async () => {
-  return useAppStore.getState().claims;
+  const store = useAppStore.getState();
+  setClaimsLoadingState(true, null);
+
+  try {
+    const backendClaims = await listBackendClaims();
+    store.setClaims(backendClaims);
+    return backendClaims;
+  } catch (error) {
+    const claims = store.claims;
+    if (claims.length === 0) {
+      const message =
+        error instanceof ApiError
+          ? error.message
+          : "Claims could not be loaded from backend. Showing local data if available.";
+      setClaimsLoadingState(false, message);
+    } else {
+      setClaimsLoadingState(false, null);
+    }
+    return claims;
+  } finally {
+    useAppStore.getState().setClaimsLoading(false);
+  }
 };
 
 export const getNotifications = async () => {
@@ -131,23 +278,55 @@ export const getNotifications = async () => {
 };
 
 export const getClaimById = async (id: string) => {
-  return useAppStore.getState().claims.find((claim) => claim.id === id) ?? null;
+  const localClaim = useAppStore.getState().claims.find((claim) => claim.id === id) ?? null;
+
+  if (!localClaim?.backendId) {
+    return localClaim;
+  }
+
+  try {
+    const backendClaim = await apiRequest<BackendClaim>(`/claims/${localClaim.backendId}`, { method: "GET" }, true);
+    return mergeWithExistingClaim(mapBackendClaimToUi(backendClaim), localClaim);
+  } catch {
+    return localClaim;
+  }
 };
 
 export const getClaimsByPatient = async (patientId: string) => {
-  return useAppStore.getState().claims.filter((claim) => claim.patientId === patientId);
+  return (await getClaims()).filter((claim) => claim.patientId === patientId);
 };
 
 export const getClaimsByHospital = async (hospital: string) => {
-  return useAppStore.getState().claims.filter((claim) => claim.hospital === hospital);
+  return (await getClaims()).filter((claim) => claim.hospital === hospital);
 };
 
 export const submitClaim = async (claimInput: Partial<Claim>) => {
-  const claim = buildNewClaim(claimInput);
+  const fallbackClaim = buildNewClaim(claimInput);
   const store = useAppStore.getState();
-  store.addClaim(claim);
-  notifyClaimSubmitted(claim);
-  return claim;
+
+  try {
+    const payload = toBackendClaimPayload(claimInput, fallbackClaim);
+    const created = await apiRequest<BackendClaim>(
+      "/claims",
+      {
+        method: "POST",
+        body: JSON.stringify(payload),
+      },
+      true,
+    );
+    const savedClaim = mergeWithExistingClaim(mapBackendClaimToUi(created), {
+      ...claimInput,
+      id: payload.claim_number,
+      claimNumber: payload.claim_number,
+    });
+    store.addClaim(savedClaim);
+    notifyClaimSubmitted(savedClaim);
+    return savedClaim;
+  } catch {
+    store.addClaim(fallbackClaim);
+    notifyClaimSubmitted(fallbackClaim);
+    return fallbackClaim;
+  }
 };
 
 export const recordDecision = async (id: string, status: ClaimStatus, note?: string) => {
@@ -168,6 +347,34 @@ export const recordDecision = async (id: string, status: ClaimStatus, note?: str
     ...claim.timeline,
     { label: timelineLabel, time: new Date().toISOString(), actor: "insurer" },
   ];
+
+  if (claim.backendId) {
+    try {
+      const updated = await apiRequest<BackendClaim>(
+        `/claims/${claim.backendId}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify({
+            status,
+            priority: claim.priority || "normal",
+            notes: note || null,
+          }),
+        },
+        true,
+      );
+      const merged = mergeWithExistingClaim(mapBackendClaimToUi(updated), {
+        ...claim,
+        status,
+        timeline,
+        decisionNote: note,
+      });
+      store.updateClaim(id, merged);
+      notifyDecisionMade(merged, status, note);
+      return merged;
+    } catch {
+      // Fall back to local update when backend update fails.
+    }
+  }
 
   store.updateClaim(id, { status, timeline, decisionNote: note });
   const updatedClaim = { ...claim, status, timeline, decisionNote: note };
@@ -206,6 +413,34 @@ export const requestMoreDocuments = async (id: string, requestNote: string) => {
     ...claim.timeline,
     { label: `Documents requested by insurer: ${requestNote}`, time: new Date().toISOString(), actor: "insurer" as const },
   ];
+
+  if (claim.backendId) {
+    try {
+      const updated = await apiRequest<BackendClaim>(
+        `/claims/${claim.backendId}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify({
+            status: "under_review",
+            priority: claim.priority || "normal",
+            notes: requestNote,
+          }),
+        },
+        true,
+      );
+      const merged = mergeWithExistingClaim(mapBackendClaimToUi(updated), {
+        ...claim,
+        status: "under_review",
+        timeline,
+        decisionNote: requestNote,
+      });
+      store.updateClaim(id, merged);
+      notifyDocumentRequested(merged, requestNote);
+      return merged;
+    } catch {
+      // Fall back to local update when backend update fails.
+    }
+  }
 
   store.updateClaim(id, { status: "under_review", timeline, decisionNote: requestNote });
   const updatedClaim = { ...claim, status: "under_review" as ClaimStatus, timeline, decisionNote: requestNote };

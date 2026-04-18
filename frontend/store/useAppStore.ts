@@ -20,9 +20,13 @@ const dedupeById = <T extends { id: string }>(items: T[]) => {
 
 interface AppStore {
   claims: Claim[];
+  claimsLoading: boolean;
+  claimsError: string | null;
   notifications: Notification[];
   lastSyncAt: number;
   setClaims: (claims: Claim[]) => void;
+  setClaimsLoading: (loading: boolean) => void;
+  setClaimsError: (message: string | null) => void;
   addClaim: (claim: Claim) => void;
   updateClaim: (id: string, updates: Partial<Claim>) => void;
   setNotifications: (notifications: Notification[]) => void;
@@ -34,11 +38,23 @@ interface AppStore {
 
 export const useAppStore = create<AppStore>((set, get) => ({
   claims: [],
+  claimsLoading: false,
+  claimsError: null,
   notifications: [],
   lastSyncAt: 0,
 
   setClaims: (claims: Claim[]) => {
-    set({ claims: dedupeById(claims), lastSyncAt: Date.now() });
+    const updated = dedupeById(claims);
+    set({ claims: updated, claimsError: null, lastSyncAt: Date.now() });
+    localStorage.setItem(CLAIMS_KEY, JSON.stringify(updated));
+  },
+
+  setClaimsLoading: (claimsLoading: boolean) => {
+    set({ claimsLoading });
+  },
+
+  setClaimsError: (claimsError: string | null) => {
+    set({ claimsError, lastSyncAt: Date.now() });
   },
 
   addClaim: (claim: Claim) => {

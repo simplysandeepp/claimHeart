@@ -195,7 +195,11 @@ export const MOCK_NOTIFICATIONS: Notification[] = [
   },
 ];
 
-export const seedIfEmpty = () => {
+type SeedOptions = {
+  includeDemoClaims?: boolean;
+};
+
+export const seedIfEmpty = ({ includeDemoClaims = false }: SeedOptions = {}) => {
   if (typeof window === "undefined") {
     return;
   }
@@ -204,7 +208,7 @@ export const seedIfEmpty = () => {
     window.localStorage.setItem("users", JSON.stringify(MOCK_USERS));
   }
 
-  if (!window.localStorage.getItem("claims")) {
+  if (includeDemoClaims && !window.localStorage.getItem("claims")) {
     window.localStorage.setItem("claims", JSON.stringify(MOCK_CLAIMS));
   }
 

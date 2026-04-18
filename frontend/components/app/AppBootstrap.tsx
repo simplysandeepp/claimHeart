@@ -6,7 +6,7 @@ import { seedIfEmpty } from "@/lib/mockData";
 
 export default function AppBootstrap({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    seedIfEmpty();
+    seedIfEmpty({ includeDemoClaims: false });
   }, []);
 
   return (

@@ -37,6 +37,8 @@ const caseTone = {
 export default function PatientDashboardPage() {
   const ready = usePageReady();
   const claims = useAppStore((state) => state.claims);
+  const claimsLoading = useAppStore((state) => state.claimsLoading);
+  const claimsError = useAppStore((state) => state.claimsError);
   const [viewer, setViewer] = useState<AppUser | null>(null);
   const [selectedCaseId, setSelectedCaseId] = useState<DemoCaseId>("case-2");
   const [policyText, setPolicyText] = useState("");
@@ -85,7 +87,7 @@ export default function PatientDashboardPage() {
     toast.success("Supporting documents shared with the insurer.");
   };
 
-  if (!ready || !viewer) {
+  if (!ready || !viewer || (claimsLoading && claims.length === 0)) {
     return (
       <div className="space-y-6">
         <div className="space-y-3"><SkeletonBlock className="h-9 w-56" /><SkeletonBlock className="h-5 w-80" /></div>
@@ -99,6 +101,12 @@ export default function PatientDashboardPage() {
 
   return (
     <div className="space-y-6 sm:space-y-8">
+      {claimsError ? (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+          {claimsError}
+        </div>
+      ) : null}
+
       <section className="overflow-hidden rounded-[2rem] border border-slate-200 bg-[linear-gradient(135deg,#f8fbff_0%,#e8f1fb_40%,#0d1f34_40%,#112e4d_100%)] shadow-[0_20px_50px_rgba(15,23,42,0.10)]">
         <div className="grid gap-8 px-5 py-6 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:px-10 lg:py-10">
           <div>
