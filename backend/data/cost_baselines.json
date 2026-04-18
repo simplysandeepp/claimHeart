@@ -1,0 +1,22 @@
+{
+  "dengue": {"mumbai": 45000, "delhi": 40000, "bangalore": 42000, "hyderabad": 41000, "chennai": 39500, "average": 41500},
+  "appendectomy": {"mumbai": 85000, "delhi": 75000, "bangalore": 80000, "hyderabad": 77000, "chennai": 76000, "average": 78600},
+  "cholecystectomy": {"mumbai": 120000, "delhi": 108000, "bangalore": 113000, "hyderabad": 109000, "chennai": 104000, "average": 110800},
+  "hernia_repair": {"mumbai": 90000, "delhi": 82000, "bangalore": 86000, "hyderabad": 83000, "chennai": 81000, "average": 84400},
+  "tympanoplasty": {"mumbai": 70000, "delhi": 65000, "bangalore": 67000, "hyderabad": 64000, "chennai": 63000, "average": 65800},
+  "normal_delivery": {"mumbai": 65000, "delhi": 58000, "bangalore": 61000, "hyderabad": 59000, "chennai": 57000, "average": 60000},
+  "c_section": {"mumbai": 98000, "delhi": 89000, "bangalore": 93000, "hyderabad": 90000, "chennai": 87000, "average": 91400},
+  "knee_replacement": {"mumbai": 310000, "delhi": 285000, "bangalore": 295000, "hyderabad": 288000, "chennai": 280000, "average": 291600},
+  "hip_replacement": {"mumbai": 340000, "delhi": 310000, "bangalore": 325000, "hyderabad": 315000, "chennai": 305000, "average": 319000},
+  "cabg": {"mumbai": 420000, "delhi": 390000, "bangalore": 405000, "hyderabad": 395000, "chennai": 385000, "average": 399000},
+  "angioplasty": {"mumbai": 245000, "delhi": 225000, "bangalore": 235000, "hyderabad": 228000, "chennai": 220000, "average": 230600},
+  "pneumonia": {"mumbai": 68000, "delhi": 62000, "bangalore": 65000, "hyderabad": 63000, "chennai": 61000, "average": 63800},
+  "malaria": {"mumbai": 38000, "delhi": 34000, "bangalore": 36000, "hyderabad": 35000, "chennai": 33500, "average": 35300},
+  "typhoid": {"mumbai": 42000, "delhi": 39000, "bangalore": 40500, "hyderabad": 39800, "chennai": 38500, "average": 39960},
+  "covid": {"mumbai": 98000, "delhi": 92000, "bangalore": 95000, "hyderabad": 91000, "chennai": 89000, "average": 93000},
+  "uti": {"mumbai": 30000, "delhi": 27000, "bangalore": 28500, "hyderabad": 27800, "chennai": 26500, "average": 27960},
+  "fracture_management": {"mumbai": 115000, "delhi": 104000, "bangalore": 109000, "hyderabad": 106000, "chennai": 101000, "average": 107000},
+  "dialysis": {"mumbai": 3200, "delhi": 2900, "bangalore": 3050, "hyderabad": 2950, "chennai": 2850, "average": 2990},
+  "cataract": {"mumbai": 52000, "delhi": 47000, "bangalore": 49500, "hyderabad": 48000, "chennai": 46500, "average": 48600},
+  "tonsillectomy": {"mumbai": 78000, "delhi": 71000, "bangalore": 74500, "hyderabad": 72000, "chennai": 70500, "average": 73200}
+}
