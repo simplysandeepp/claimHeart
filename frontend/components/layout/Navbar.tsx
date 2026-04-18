@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Activity, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import ClaimHeartLogo from "@/components/ui/ClaimHeartLogo";
 
 const NAV_LINKS = [
@@ -22,13 +22,7 @@ export default function Navbar() {
           <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl border border-[var(--ch-blue-border)] bg-[#e9f2fb] p-0.5">
             <ClaimHeartLogo className="h-full w-full" imageClassName="scale-110" priority />
           </div>
-          <div>
-            <p className="text-[1.65rem] font-bold leading-none tracking-[-0.03em] text-slate-800">ClaimHeart</p>
-            <div className="mt-1.5 flex items-center gap-1.5">
-              <Activity className="h-3 w-3 text-[var(--ch-blue)]" />
-              <span className="text-xs text-[var(--ch-muted)]">AI Claims Platform</span>
-            </div>
-          </div>
+          <p className="text-[1.9rem] font-bold leading-none tracking-[-0.03em] text-slate-800 sm:text-[2rem]">ClaimHeart</p>
         </Link>
 
         <div className="hidden items-center gap-10 md:flex">
