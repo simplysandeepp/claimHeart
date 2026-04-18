@@ -153,6 +153,18 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     setMobileMenuOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [mobileMenuOpen]);
+
   const navItems = useMemo(() => NAV_ITEMS[role], [role]);
   const viewer = useMemo(() => resolveViewerForRole(role, user, activeCaseId), [activeCaseId, role, user]);
   const activeNavHref = useMemo(() => {
@@ -192,6 +204,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ duration: 0.26, ease: "easeOut" }}
+            id="mobile-dashboard-sidebar"
             className="fixed inset-y-0 left-0 z-50 flex w-[17rem] flex-col bg-[var(--ch-blue-dark)] shadow-[2px_0_16px_rgba(47,111,178,0.16)] lg:hidden"
           >
             <div className="flex h-[72px] items-center justify-between border-b border-white/10 px-5">
@@ -252,7 +265,15 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       <div className={`flex min-h-screen min-w-0 flex-col transition-[padding] duration-200 ${desktopSidebarWidth}`}>
         <header className="sticky top-0 z-40 flex min-h-[72px] items-center justify-between border-b border-slate-200 bg-white/95 px-4 sm:px-6 lg:px-8 backdrop-blur">
           <div className="flex min-w-0 items-center gap-2 sm:gap-3">
-            <motion.button whileTap={{ scale: 0.95 }} type="button" className="rounded-xl p-2 text-slate-500 lg:hidden" onClick={() => setMobileMenuOpen(true)}>
+            <motion.button
+              whileTap={{ scale: 0.95 }}
+              type="button"
+              className="rounded-xl p-2 text-slate-500 lg:hidden"
+              onClick={() => setMobileMenuOpen(true)}
+              aria-label="Open navigation menu"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-dashboard-sidebar"
+            >
               <Menu className="h-5 w-5" />
             </motion.button>
             <span className="hidden text-slate-400 lg:inline-flex"><X className="h-4 w-4" /></span>

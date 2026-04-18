@@ -33,8 +33,11 @@ google-generativeai
 # TASK QUEUE 
 celery
 redis
+flower
 
 # UTILITIES
 requests
 tqdm
 httpx==0.26.0
+boto3
+pinecone-client
