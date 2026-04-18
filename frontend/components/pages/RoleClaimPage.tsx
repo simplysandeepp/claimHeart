@@ -5,7 +5,7 @@ import { getCurrentUser } from "@/lib/api/auth";
 import { buildDecisionLetter } from "@/lib/api/claims";
 import { useAppStore } from "@/store/useAppStore";
 import AgentResultCard from "@/components/claims/AgentResultCard";
-import TimelineView from "@/components/claims/TimelineView";
+import ClaimTimeline from "@/components/claims/ClaimTimeline";
 import StatusBadge from "@/components/claims/StatusBadge";
 import MotionCard from "@/components/ui/MotionCard";
 import { SkeletonBlock, SkeletonCard } from "@/components/ui/Skeleton";
@@ -77,7 +77,19 @@ export default function RoleClaimPage({ claimId, role }: { claimId: string; role
         <div className="space-y-6">
           <MotionCard className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_8px_24px_rgba(15,23,42,0.04)]">
             <h2 className="text-xl font-bold text-slate-900 md:text-[1.45rem]">Timeline</h2>
-            <div className="mt-5"><TimelineView timeline={claim.timeline} /></div>
+            <div className="mt-5">
+              <ClaimTimeline
+                items={claim.timeline.map((entry, index) => ({
+                  id: `${claim.id}-${index}`,
+                  stage: entry.label,
+                  status: index === claim.timeline.length - 1 ? "in_progress" : "completed",
+                  timestamp: entry.time,
+                  actor: entry.actor,
+                  actorName: entry.actor,
+                  description: entry.label,
+                }))}
+              />
+            </div>
           </MotionCard>
 
           <MotionCard className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_8px_24px_rgba(15,23,42,0.04)]">
